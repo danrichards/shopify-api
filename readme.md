@@ -2,8 +2,8 @@
 
 An object-oriented approach towards using the Shopify API. It is currently a work in progress and only supports:
 
-* Orders
-* Products
+* [Order](https://help.shopify.com/api/reference/order)
+* [Product](https://help.shopify.com/api/reference/product)
 
 ## Composer
 
@@ -48,11 +48,11 @@ In your `config/app.php`
 
 ### Add the following to your `providers` array:
 
-    `ShopifyApi\Providers\ShopifyServiceProvider::class,`
+    ShopifyApi\Providers\ShopifyServiceProvider::class,
     
 ### Add the following to your `aliases` array:
 
-    `'Shopify' => ShopifyApi\Support\ShopifyFacade::class,`
+    'Shopify' => ShopifyApi\Support\ShopifyFacade::class,
     
 ### Using the Facade gives you `Manager`
 
@@ -69,3 +69,7 @@ Methods called on `Manager` will cascade down onto `Client` via the `__call` met
 ## Special Thanks
 
 This repository's structure was modeled after the robust [`cdaguerre/php-trello-api`](https://github.com/cdaguerre/php-trello-api).
+
+## License
+
+MIT.
