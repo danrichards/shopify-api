@@ -1,5 +1,5 @@
 {
-  "name": "shineon/shopify-api",
+  "name": "dan/shopify-api",
   "description": "Shopify API for PHP",
   "keywords": ["shopify", "api", "webhooks", "laravel"],
   "license": "MIT",
