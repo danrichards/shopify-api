@@ -42,7 +42,7 @@ class ShopifyServiceProvider extends ServiceProvider
             // ShopifyHttpClient decorates GuzzleClient
             $shopify_http_client = new ShopifyHttpClient($config, $guzzle_http_client);
 
-            // ShopifyClient decorates our ShopifyClient. We may swap in a
+            // ShopifyClient decorates our ShopifyHttpClient. We may swap in a
             // different client (ie. different shop) later, if need be.
             $shopify_client = new ShopifyClient($shopify_http_client);
 
