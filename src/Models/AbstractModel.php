@@ -102,10 +102,12 @@ abstract class AbstractModel
     }
 
     /**
+     * @param array $data
      * @return $this
      */
-    public function setData($data)
+    public function setData(array $data)
     {
+        $this->id = isset($data['id']) ? $data['id'] : null;
         $this->data = $data;
 
         return $this;
