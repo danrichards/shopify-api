@@ -217,6 +217,26 @@ abstract class AbstractModel
     }
 
     /**
+     * Get multiple results from the Api and map them to Models
+     *
+     * @param array $params
+     * @return array
+     */
+    public function all(array $params = [])
+    {
+        $all = $this->api->all($params);
+        if (! empty($all)) {
+            $all = $all[$this->api->getParametersWrapMany()];
+        }
+
+        $all = array_map(function($product) {
+            return (new static($this->client))->setData($product);
+        }, $all);
+
+        return $all;
+    }
+
+    /**
      * Update the object through API
      *
      * @return $this

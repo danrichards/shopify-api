@@ -13,6 +13,9 @@ class Product extends AbstractApi
     /** @var string $parameters_wrap */
     protected static $parameters_wrap = 'product';
 
+    /** @var string $parameters_wrap_many */
+    protected static $parameters_wrap_many = 'products';
+
     /** @var string $path */
     protected static $path = '/admin/products/#id#.json';
 
@@ -38,6 +41,15 @@ class Product extends AbstractApi
 
     /** @var array $ignore_on_update_fields */
     public static $ignore_on_update_fields = [];
+
+    /**
+     * @param array $params
+     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     */
+    public function all(array $params = [])
+    {
+        return $this->get('/admin/products.json', $params);
+    }
 
     /**
      * Find a Product

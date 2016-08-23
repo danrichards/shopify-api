@@ -17,6 +17,9 @@ abstract class AbstractApi
     /** @var string $parameters_wrap */
     protected static $parameters_wrap = '';
 
+    /** @var string $parameters_wrap_many */
+    protected static $parameters_wrap_many = '';
+
     /** @var Client */
     protected $client;
 
@@ -100,6 +103,22 @@ abstract class AbstractApi
         }
 
         return $response;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParametersWrap()
+    {
+        return static::$parameters_wrap;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParametersWrapMany()
+    {
+        return static::$parameters_wrap_many;
     }
 
     /**

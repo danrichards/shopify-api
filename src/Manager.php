@@ -58,6 +58,19 @@ class Manager
     }
 
     /**
+     * Get all the products from a response as an array of Models or a
+     * Collection of Models for Laravel.
+     *
+     * @param array $params
+     * @return \Illuminate\Support\Collection|array
+     */
+    public function getAllProducts(array $params = [])
+    {
+        $products = (new Product($this->client))->all($params);
+        return defined('LARAVEL_START') ? collect($products) : $products;
+    }
+
+    /**
      * Get board by id or create a new one
      *
      * @param string $id the board's id
@@ -67,6 +80,19 @@ class Manager
     public function getOrder($id = null)
     {
         return new Order($this->client, $id);
+    }
+
+    /**
+     * Get all the orders from a response as an array of Models or a
+     * Collection of Models for Laravel.
+     *
+     * @param array $params
+     * @return \Illuminate\Support\Collection|array
+     */
+    public function getAllOrders(array $params = [])
+    {
+        $orders = (new Order($this->client))->all($params);
+        return defined('LARAVEL_START') ? collect($orders) : $orders;
     }
 
     /**

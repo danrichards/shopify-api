@@ -80,11 +80,23 @@ class Order extends AbstractApi
     /** @var string $parameters_wrap */
     protected static $parameters_wrap = 'order';
 
+    /** @var string $parameters_wrap_many */
+    protected static $parameters_wrap_many = 'orders';
+
     /** @var string $path */
     protected static $path = '/admin/orders/#id#.json';
 
     /** @var array $ignore_on_update_fields */
     public static $ignore_on_update_fields = [];
+
+    /**
+     * @param array $params
+     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     */
+    public function all(array $params = [])
+    {
+        return $this->get('/admin/orders.json', $params);
+    }
 
     /**
      * Find an Order
