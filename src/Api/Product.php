@@ -52,6 +52,17 @@ class Product extends AbstractApi
     }
 
     /**
+     * @param array $params
+     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     */
+    public function count(array $params = [])
+    {
+        $count = $this->get('/admin/products/count.json', $params);
+        return isset($count['count'])
+            ? $count['count'] : 0;
+    }
+
+    /**
      * Find a Product
      *
      * @link https://help.shopify.com/api/reference/product#show

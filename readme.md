@@ -37,13 +37,20 @@ $shopify_client = new ShopifyClient($shopify_http_client);
 // Manager provide some conveniences and is available to bound to a container.
 $mgr = new Manager($shopify_client);
 
-$mgr->getProduct(123);      // returns ShopifyApi/Models/Product
+$mgr->getProduct(123);              // returns ShopifyApi/Models/Product
 
-$mgr->getAllProducts();     // returns Collection of ShopifyApi/Models/Product
+$mgr->getAllProducts();             // returns Collection of ShopifyApi/Models/Product
 
-$mgr->getOrder(12345);      // returns ShopifyApi/Models/Order
+$mgr->getOrder(12345);              // returns ShopifyApi/Models/Order
 
-$mgr->getAllOrders();       // returns a Collection of ShopifyApi/Models/Order
+$mgr->getAllOrders();               // returns a Collection of ShopifyApi/Models/Order
+
+// Alternatively, we may call methods on the API object.
+$mgr->api('products')->show(123);    // returns ShopifyApi/Models/Product
+
+$mgr->api('products')->all();        // returns Collection of ShopifyApi/Models/Product
+
+$mgr->api('products')->count();      // returns # of products
 ```
 
 ## Usage with Laravel
@@ -73,6 +80,8 @@ Shopify::getAllOrders();                // returns a Collection of ShopifyApi/Mo
 Shopify::api('products')->show(123);    // returns ShopifyApi/Models/Product
 
 Shopify::api('products')->all();        // returns Collection of ShopifyApi/Models/Product
+
+Shopify::api('products')->count();      // returns # of products
 ```
 
 Methods called on `Manager` will cascade down onto `Client` via the `__call` method.

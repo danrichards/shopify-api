@@ -99,6 +99,17 @@ class Order extends AbstractApi
     }
 
     /**
+     * @param array $params
+     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     */
+    public function count(array $params = [])
+    {
+        $count =  $this->get('/admin/orders/count.json', $params);
+        return isset($count['count'])
+            ? $count['count'] : 0;
+    }
+
+    /**
      * Find an Order
      *
      * @link https://help.shopify.com/api/reference/order#show
