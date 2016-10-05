@@ -86,27 +86,29 @@ class Manager
     /**
      * Get a variant by id or create a new one
      *
+     * @soon
      * @param int $id Variant id
      * @return Variant
      */
-    public function getVariant($id = null)
-    {
-        return new Variant($this->client , $id);
-    }
+//    public function getVariant($id = null)
+//    {
+//        return new Variant($this->client , $id);
+//    }
 
     /**
      * Get all the variants from a response as an array of Models or a
      * Collection of Models for Laravel.
      *
+     * @soon
      * @param $product_id
      * @param array $params
      * @return array|\Illuminate\Support\Collection
      */
-    public function getAllVariants($product_id, array $params = [])
-    {
-        $variants = (new Variant($this->client, null, $product_id))->all($params);
-        return defined('LARAVEL_START') ? collect($variants) : $variants;
-    }
+//    public function getAllVariants($product_id, array $params = [])
+//    {
+//        $variants = (new Variant($this->client, null, $product_id))->all($params);
+//        return defined('LARAVEL_START') ? collect($variants) : $variants;
+//    }
 
     /**
      * @param string $method method name
