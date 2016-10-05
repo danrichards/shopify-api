@@ -172,7 +172,7 @@ abstract class AbstractModel
         $this->preRefresh();
         $this->data = $this->api->show($this->id, static::$load_params);
         if (is_array($this->data) && array_key_exists(static::$api_name, $this->data)) {
-            $this->data = $this->data[static::$api_name];
+            $this->setData($this->data[static::$api_name]);
         }
         $this->postRefresh();
 

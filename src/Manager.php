@@ -46,7 +46,7 @@ class Manager
     }
 
     /**
-     * Get organization by id or create a new one
+     * Get a product by id or create a new one
      *
      * @param string $id the organization's id
      *
@@ -71,7 +71,33 @@ class Manager
     }
 
     /**
-     * Get board by id or create a new one
+     * Get a variant by id or create a new one
+     *
+     * @param string $id the organization's id
+     *
+     * @return Variant
+     */
+    public function getVariant($id = null)
+    {
+        return new Variant($this->client, $id);
+    }
+
+    /**
+     * Get all the variants from a response as an array of Models or a
+     * Collection of Models for Laravel.
+     *
+     * @param int $product_id
+     * @param array $params
+     * @return \Illuminate\Support\Collection|array
+     */
+    public function getAllVariants($product_id, array $params = [])
+    {
+        $variants = (new Variant($this->client))->all($product_id, $params);
+        return defined('LARAVEL_START') ? collect($variants) : $variants;
+    }
+
+    /**
+     * Get an order by id or create a new one
      *
      * @param string $id the board's id
      *
