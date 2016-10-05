@@ -2,10 +2,9 @@
 
 namespace ShopifyApi\Api;
 
-use DateTime;
+use ShopifyApi\Client;
 use BadMethodCallException;
 use InvalidArgumentException;
-use ShopifyApi\Client;
 use ShopifyApi\ResponseMediator;
 
 /**

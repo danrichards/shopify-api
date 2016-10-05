@@ -5,6 +5,7 @@ namespace ShopifyApi;
 use BadMethodCallException;
 use ShopifyApi\Models\Order;
 use ShopifyApi\Models\Product;
+use ShopifyApi\Models\Variant;
 
 /**
  * Class Manager
@@ -48,7 +49,7 @@ class Manager
     /**
      * Get a product by id or create a new one
      *
-     * @param string $id the organization's id
+     * @param int $id the Product id
      *
      * @return Product
      */
@@ -71,35 +72,9 @@ class Manager
     }
 
     /**
-     * Get a variant by id or create a new one
-     *
-     * @param string $id the organization's id
-     *
-     * @return Variant
-     */
-    public function getVariant($id = null)
-    {
-        return new Variant($this->client, $id);
-    }
-
-    /**
-     * Get all the variants from a response as an array of Models or a
-     * Collection of Models for Laravel.
-     *
-     * @param int $product_id
-     * @param array $params
-     * @return \Illuminate\Support\Collection|array
-     */
-    public function getAllVariants($product_id, array $params = [])
-    {
-        $variants = (new Variant($this->client))->all($product_id, $params);
-        return defined('LARAVEL_START') ? collect($variants) : $variants;
-    }
-
-    /**
      * Get an order by id or create a new one
      *
-     * @param string $id the board's id
+     * @param int $id the Order id
      *
      * @return Order
      */
@@ -109,16 +84,28 @@ class Manager
     }
 
     /**
-     * Get all the orders from a response as an array of Models or a
+     * Get a variant by id or create a new one
+     *
+     * @param int $id Variant id
+     * @return Variant
+     */
+    public function getVariant($id = null)
+    {
+        return new Variant($this->client , $id);
+    }
+
+    /**
+     * Get all the variants from a response as an array of Models or a
      * Collection of Models for Laravel.
      *
+     * @param $product_id
      * @param array $params
-     * @return \Illuminate\Support\Collection|array
+     * @return array|\Illuminate\Support\Collection
      */
-    public function getAllOrders(array $params = [])
+    public function getAllVariants($product_id, array $params = [])
     {
-        $orders = (new Order($this->client))->all($params);
-        return defined('LARAVEL_START') ? collect($orders) : $orders;
+        $variants = (new Variant($this->client, null, $product_id))->all($params);
+        return defined('LARAVEL_START') ? collect($variants) : $variants;
     }
 
     /**

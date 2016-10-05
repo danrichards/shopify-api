@@ -43,6 +43,10 @@ class Product extends AbstractApi
     public static $ignore_on_update_fields = [];
 
     /**
+     * Retrieve all products (api limit is 250)
+     *
+     * @link https://help.shopify.com/api/reference/product#index
+     *
      * @param array $params
      * @return \Guzzle\Http\EntityBodyInterface|mixed|string
      */
@@ -52,6 +56,10 @@ class Product extends AbstractApi
     }
 
     /**
+     * Retrieve the number of products
+     *
+     * @link https://help.shopify.com/api/reference/product#count
+     *
      * @param array $params
      * @return \Guzzle\Http\EntityBodyInterface|mixed|string
      */
@@ -89,6 +97,16 @@ class Product extends AbstractApi
     public function update($id, array $params = [])
     {
         return $this->put($this->getPath(rawurlencode($id)), $params);
+    }
+
+    /**
+     * Variants API
+     *
+     * @return Variants
+     */
+    public function variants()
+    {
+        return new Variants($this->client);
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace ShopifyApi\Models;
 
+use ShopifyApi\Client;
+
 /**
  * Class Variant
  *
@@ -74,5 +76,39 @@ class Variant extends AbstractModel
 
     /** @var array $load_params */
     protected static $load_params = [];
+
+    /** @var null|int $product_id */
+    protected $product_id = null;
+
+    /**
+     * Constructor.
+     *
+     * @param Client $client
+     * @param int $id           The id of the Variant
+     * @param int $product_id   The id of the Product
+     */
+    public function __construct(Client $client, $id = null, $product_id = null)
+    {
+        if ($product_id) {
+            $this->product_id = $product_id;
+        }
+
+        parent::__construct($client, $id, $product_id);
+    }
+
+    /**
+     * @return $this
+     */
+    public function refresh()
+    {
+        $this->preRefresh();
+        $this->data = $this->api->show($this->id, static::$load_params);
+        if (is_array($this->data) && array_key_exists(static::$api_name, $this->data)) {
+            $this->setData($this->data[static::$api_name]);
+        }
+        $this->postRefresh();
+
+        return $this;
+    }
 
 }

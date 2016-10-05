@@ -90,6 +90,10 @@ class Order extends AbstractApi
     public static $ignore_on_update_fields = [];
 
     /**
+     * Retrieve all orders (api limit is 250)
+     *
+     * @link https://help.shopify.com/api/reference/order#index
+     *
      * @param array $params
      * @return \Guzzle\Http\EntityBodyInterface|mixed|string
      */
@@ -99,6 +103,10 @@ class Order extends AbstractApi
     }
 
     /**
+     * Retrieve the number of orders
+     *
+     * @link https://help.shopify.com/api/reference/order#count
+     *
      * @param array $params
      * @return \Guzzle\Http\EntityBodyInterface|mixed|string
      */

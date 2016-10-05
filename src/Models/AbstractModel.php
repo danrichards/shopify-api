@@ -3,9 +3,9 @@
 namespace ShopifyApi\Models;
 
 use DateTime;
-use BadMethodCallException;
 use ShopifyApi\Util;
 use ShopifyApi\Client;
+use BadMethodCallException;
 use ShopifyApi\Api\AbstractApi;
 
 /**
@@ -44,7 +44,7 @@ abstract class AbstractModel
     public function __construct(Client $client, $id = null)
     {
         $this->client = $client;
-        $this->api = $client->api(static::$api_name);
+        $this->api = $client->api(static::$api_name, $id);
         $this->fields = $this->api->getFields();
 
         if ($id) {
@@ -227,6 +227,7 @@ abstract class AbstractModel
     public function all(array $params = [])
     {
         $all = $this->api->all($params);
+
         if (! empty($all)) {
             $all = $all[$this->api->getParametersWrapMany()];
         }

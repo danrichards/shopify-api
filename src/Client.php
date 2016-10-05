@@ -4,6 +4,7 @@ namespace ShopifyApi;
 
 use ShopifyApi\Api\Order;
 use ShopifyApi\Api\Product;
+use ShopifyApi\Api\Variants;
 use BadMethodCallException;
 use InvalidArgumentException;
 use ShopifyApi\Api\AbstractApi;
@@ -75,11 +76,12 @@ class Client
      * Get an API by name
      *
      * @param string $name
+     * @param null|int $related
      * @return AbstractApi
      *
      * @throws InvalidArgumentException if the requested api does not exist
      */
-    public function api($name)
+    public function api($name, $related = null)
     {
         switch ($name) {
             case 'product':
@@ -89,6 +91,10 @@ class Client
             case 'order':
             case 'orders':
                 $api = new Order($this);
+                break;
+            case 'variant':
+            case 'variants':
+                $api = new Variants($this, $related);
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('Undefined api called: "%s"', $name));
@@ -100,7 +106,7 @@ class Client
     /**
      * Authenticate a user for all next requests
      *
-     * @see \App\ServiceProviders\ShopifyServiceProvider
+     * @see \ShopifyApi\Providers\ShopifyServiceProvider
      *
      * @param array $config
      * @return $this
