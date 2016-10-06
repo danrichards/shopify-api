@@ -123,6 +123,16 @@ abstract class AbstractModel
     }
 
     /**
+     * @param $name
+     * @param $value
+     * @return mixed
+     */
+    public function setOriginal($name, $value)
+    {
+        return $this->data[$name] = $value;
+    }
+
+    /**
      * @param DateTime|string
      * @return $this
      */

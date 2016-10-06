@@ -59,6 +59,20 @@ class Product extends AbstractModel
     }
 
     /**
+     * @param array|string $tags
+     * @return $this
+     */
+    public function setTags($tags)
+    {
+        if (is_array($tags)) {
+            $this->setOriginal('tags', implode(',', $tags));
+        } elseif (is_string($tags)) {
+            $this->setOriginal('tags', $tags);
+        }
+        return $this;
+    }
+
+    /**
      * @return DateTime|null
      */
     public function getPublishedAt()
