@@ -18,6 +18,9 @@ class Manager
     /** @var Client $client */
     protected $client;
 
+    /** @var array $api_cache */
+    protected $api_cache = [];
+
     /**
      * Constructor.
      *
@@ -55,7 +58,8 @@ class Manager
      */
     public function getProduct($id = null)
     {
-        return new Product($this->client, $id);
+        return $this->fetchFromApiCache(Product::class, $id)
+            ?: new Product($this->client, $id);
     }
 
     /**
@@ -67,7 +71,9 @@ class Manager
      */
     public function getAllProducts(array $params = [])
     {
-        $products = (new Product($this->client))->all($params);
+        $products = $this->fetchFromApiCache(Product::class, $params)
+            ?: (new Product($this->client))->all($params);
+
         return defined('LARAVEL_START') ? collect($products) : $products;
     }
 
@@ -80,7 +86,23 @@ class Manager
      */
     public function getOrder($id = null)
     {
-        return new Order($this->client, $id);
+        return $this->fetchFromApiCache(Order::class, $id)
+            ?: new Order($this->client, $id);
+    }
+
+    /**
+     * Get all the orders from a response as an array of Models or a
+     * Collection of Models for Laravel.
+     *
+     * @param array $params
+     * @return \Illuminate\Support\Collection|array
+     */
+    public function getAllOrders(array $params = [])
+    {
+        $orders = $this->fetchFromApiCache(Order::class, $params)
+            ?: (new Order($this->client))->all($params);
+
+        return defined('LARAVEL_START') ? collect($orders) : $orders;
     }
 
     /**
@@ -109,6 +131,28 @@ class Manager
 //        $variants = (new Variant($this->client, null, $product_id))->all($params);
 //        return defined('LARAVEL_START') ? collect($variants) : $variants;
 //    }
+
+    /**
+     * @param string $model
+     * @param callable $callback
+     */
+    public function setApiCache($model, callable $callback) {
+        $this->api_cache[$model] = $callback;
+    }
+
+    /**
+     * @param $model
+     * @param $params
+     * @return mixed
+     */
+    public function fetchFromApiCache($model, $params)
+    {
+        if (isset($this->api_cache[$model])) {
+            return $this->api_cache[$model]($this->getClient(), $params);
+        }
+
+        return null;
+    }
 
     /**
      * @param string $method method name

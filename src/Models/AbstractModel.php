@@ -39,17 +39,23 @@ abstract class AbstractModel
      * Constructor.
      *
      * @param $client Client
-     * @param string  $id       The id of the object
+     * @param array|string  $id_or_data Id or the data
      */
-    public function __construct(Client $client, $id = null)
+    public function __construct(Client $client, $id_or_data = null)
     {
         $this->client = $client;
-        $this->api = $client->api(static::$api_name, $id);
-        $this->fields = $this->api->getFields();
 
-        if ($id) {
-            $this->id = $id;
-            $this->refresh();
+        if (is_array($id_or_data)) {
+            $this->api = $client->api(static::$api_name, null);
+            $this->fields = $this->api->getFields();
+            $this->setData($id_or_data);
+        } else {
+            $this->api = $client->api(static::$api_name, $id_or_data);
+            $this->fields = $this->api->getFields();
+            if ($id_or_data) {
+                $this->id = $id_or_data;
+                $this->refresh();
+            }
         }
     }
 
