@@ -86,6 +86,58 @@ Shopify::api('products')->count();      // returns # of products
 
 Methods called on `Manager` will cascade down onto `Client` via the `__call` method.
 
+## Caching
+
+If you want to sprinkle a little caching in, setup a service provider and extend the `\ShopifyApi\Providers\ShopifyServiceProvider`.
+
+#### Here is an example Provider:
+
+```
+<?php
+
+namespace App\Providers;
+
+use App;
+use ShopifyApi\Manager;
+use ShopifyApi\Models\Product;
+use ShopifyApi\Providers\ShopifyServiceProvider as BaseServiceProvider;
+
+/**
+ * Class ShopifyServiceProvider
+ */
+class ShopifyServiceProvider extends BaseServiceProvider
+{
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        parent::register();
+
+        /** @var Manager $shopify */
+        $shopify = app('shopify');
+
+        $shopify->setApiCache(Product::class, function($client, $params = null) {
+
+            // No caching for collections.
+            if (is_array($params)) {
+                // Returning falsy will result in the default api behavior.
+                return null;
+            }
+            
+            $key = "shopify_product_".((string) $params);
+
+            // For example: Using Laravel Cache Facade
+            return Cache::remember($key, 15, function() use ($params) {
+                return Shopify::getProduct((string) $params);
+            });
+        });
+    }
+}
+```
+
 ## Special Thanks
 
 This repository's structure was modeled after the robust [`cdaguerre/php-trello-api`](https://github.com/cdaguerre/php-trello-api).
