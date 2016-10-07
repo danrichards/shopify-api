@@ -128,11 +128,11 @@ class ShopifyServiceProvider extends BaseServiceProvider
             }
             
             $key = "shopify_product_".((string) $params);
-
-            // For example: Using Laravel Cache Facade
-            return Cache::remember($key, 15, function() use ($params) {
-                return Shopify::getProduct((string) $params);
-            });
+            
+            // Assuming you Cache::put($key, $product->getData()); elsewhere
+            $data = Cache::get($key);
+            
+            return $data ? new Product($client, $data) : null;
         });
     }
 }
