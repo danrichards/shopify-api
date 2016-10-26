@@ -87,10 +87,7 @@ class Order extends AbstractApi
     protected static $path = '/admin/orders/#id#.json';
 
     /** @var array $ignore_on_update_fields */
-    public static $ignore_on_update_fields = [
-        'created_at',
-        'updated_at'
-    ];
+    public static $ignore_on_update_fields = [];
 
     /**
      * Retrieve all orders (api limit is 250)

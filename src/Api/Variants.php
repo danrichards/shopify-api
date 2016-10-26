@@ -51,10 +51,7 @@ class Variants extends AbstractApi
     ];
 
     /** @var array $ignore_on_update_fields */
-    public static $ignore_on_update_fields = [
-        'created_at',
-        'updated_at',
-    ];
+    public static $ignore_on_update_fields = [];
 
     /** @var int|null $product_id */
     protected $product_id = null;

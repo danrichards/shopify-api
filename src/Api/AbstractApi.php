@@ -213,6 +213,8 @@ abstract class AbstractApi
 
         $body = json_encode($parameters);
 
+//        dd($path, $body, $request_headers);
+
         $response = $this->client
             ->getHttpClient()
             ->put($path, $body, $request_headers);
