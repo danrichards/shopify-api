@@ -3,6 +3,7 @@
 namespace ShopifyApi\Models;
 
 use DateTime;
+use DateTimeZone;
 
 /**
  * Class Product
@@ -73,12 +74,13 @@ class Product extends AbstractModel
     }
 
     /**
+     * @param DateTimeZone $time_zone
      * @return DateTime|null
      */
-    public function getPublishedAt()
+    public function getPublishedAt(DateTimeZone $time_zone = null)
     {
         return is_null($date = $this->getOriginal('published_at'))
-            ? $date : new DateTime($date);
+            ? $date : new DateTime($date, $time_zone);
     }
 
     /**
@@ -111,6 +113,24 @@ class Product extends AbstractModel
     public function unpublish()
     {
         return $this->setPublishedAt(null)->save();
+    }
+
+    /**
+     * @param $variant_id
+     * @return Variant
+     */
+    public function variant($variant_id)
+    {
+        $all_variants = $this->getVariants();
+
+        foreach($all_variants as $variant_data) {
+            if ($variant_data['id'] == $variant_id) {
+                return new Variant($this->client, $variant_data);
+            }
+        }
+
+        // fail soft
+        return null;
     }
 
 }

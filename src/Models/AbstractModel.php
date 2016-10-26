@@ -3,6 +3,7 @@
 namespace ShopifyApi\Models;
 
 use DateTime;
+use DateTimeZone;
 use ShopifyApi\Util;
 use ShopifyApi\Client;
 use BadMethodCallException;
@@ -151,21 +152,23 @@ abstract class AbstractModel
     }
 
     /**
+     * @param DateTimeZone $time_zone
      * @return DateTime|null
      */
-    public function getCreatedAt()
+    public function getCreatedAt(DateTimeZone $time_zone = null)
     {
         return is_null($date = $this->getOriginal('created_at'))
-            ? $date : new DateTime($date);
+            ? $date : new DateTime($date, $time_zone);
     }
 
     /**
+     * @param DateTimeZone $time_zone
      * @return DateTime|null
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(DateTimeZone $time_zone = null)
     {
         return is_null($date = $this->getOriginal('updated_at'))
-            ? $date : new DateTime($date);
+            ? $date : new DateTime($date, $time_zone);
     }
 
     /**
