@@ -89,7 +89,7 @@ class Product extends AbstractModel
      */
     public function setPublishedAt($stringOrDateTime)
     {
-        $this->data['published_at'] = $stringOrDateTime instanceof DateTime
+        $this->data['published_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
             ? $stringOrDateTime->format('c') : $stringOrDateTime;
 
         return $this;
@@ -131,6 +131,19 @@ class Product extends AbstractModel
 
         // fail soft
         return null;
+    }
+
+    /**
+     * Variants API
+     *
+     * @return array [\ShopifyApi\Models\Variant]
+     */
+    public function variants()
+    {
+        $variants = $this->getVariants();
+        return array_map(function($variant) {
+            return new Variant($this->client, $variant);
+        }, $variants);
     }
 
 }

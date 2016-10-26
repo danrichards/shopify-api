@@ -76,12 +76,11 @@ class Client
      * Get an API by name
      *
      * @param string $name
-     * @param null|int $related
      * @return AbstractApi
      *
      * @throws InvalidArgumentException if the requested api does not exist
      */
-    public function api($name, $related = null)
+    public function api($name)
     {
         switch ($name) {
             case 'product':
@@ -94,7 +93,7 @@ class Client
                 break;
             case 'variant':
             case 'variants':
-                $api = new Variants($this, $related);
+                $api = new Variants($this);
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('Undefined api called: "%s"', $name));

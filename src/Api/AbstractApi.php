@@ -208,6 +208,9 @@ abstract class AbstractApi
                 ->createParametersBody($parameters[static::$parameters_wrap]);
         }
 
+        $parameters[static::$parameters_wrap] = $this
+            ->removeExcessParameters($parameters[static::$parameters_wrap]);
+
         $body = json_encode($parameters);
 
         $response = $this->client

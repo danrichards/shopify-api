@@ -3,6 +3,7 @@
 namespace ShopifyApi;
 
 use BadMethodCallException;
+use ShopifyApi\Api\Variants;
 use ShopifyApi\Models\Order;
 use ShopifyApi\Models\Product;
 use ShopifyApi\Models\Variant;
@@ -112,10 +113,11 @@ class Manager
      * @param int $id Variant id
      * @return Variant
      */
-//    public function getVariant($id = null)
-//    {
-//        return new Variant($this->client , $id);
-//    }
+    public function getVariant($id = null)
+    {
+        return $this->fetchFromApiCache(Variant::class, $id)
+            ?: new Variant($this->client, $id);
+    }
 
     /**
      * Get all the variants from a response as an array of Models or a
@@ -123,14 +125,13 @@ class Manager
      *
      * @soon
      * @param $product_id
-     * @param array $params
      * @return array|\Illuminate\Support\Collection
      */
-//    public function getAllVariants($product_id, array $params = [])
-//    {
-//        $variants = (new Variant($this->client, null, $product_id))->all($params);
-//        return defined('LARAVEL_START') ? collect($variants) : $variants;
-//    }
+    public function getAllVariants($product_id)
+    {
+        $variants = $this->getProduct($product_id)->variants();
+        return defined('LARAVEL_START') ? collect($variants) : $variants;
+    }
 
     /**
      * @param string $model

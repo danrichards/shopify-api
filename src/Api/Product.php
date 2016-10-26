@@ -1,6 +1,7 @@
 <?php
 
 namespace ShopifyApi\Api;
+use ShopifyApi\Models\Variant;
 
 /**
  * Class Product
@@ -40,7 +41,10 @@ class Product extends AbstractApi
     ];
 
     /** @var array $ignore_on_update_fields */
-    public static $ignore_on_update_fields = [];
+    public static $ignore_on_update_fields = [
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * Retrieve all products (api limit is 250)
@@ -106,7 +110,10 @@ class Product extends AbstractApi
      */
     public function variants()
     {
-        return new Variants($this->client);
+        $variants = $this->getVariants();
+        return array_map(function($variant) {
+            return new Variant($this->client, $variant);
+        }, $variants);
     }
 
 }

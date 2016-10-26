@@ -51,7 +51,10 @@ class Variants extends AbstractApi
     ];
 
     /** @var array $ignore_on_update_fields */
-    public static $ignore_on_update_fields = [];
+    public static $ignore_on_update_fields = [
+        'created_at',
+        'updated_at',
+    ];
 
     /** @var int|null $product_id */
     protected $product_id = null;
@@ -64,11 +67,21 @@ class Variants extends AbstractApi
      * @param int|null $product_id
      * @param int|null $variant_id
      */
-    public function __construct($client, $product_id = null, $variant_id = null)
+    public function __construct($client, $variant_id = null, $product_id = null)
     {
         parent::__construct($client);
-        $this->product_id = $product_id;
         $this->variant_id = $variant_id;
+        $this->product_id = $product_id;
+    }
+
+    /**
+     * @param $product_id
+     * @return $this
+     */
+    public function product($product_id)
+    {
+        $this->product_id = $product_id;
+        return $this;
     }
 
     /**

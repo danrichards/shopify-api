@@ -47,7 +47,10 @@ abstract class AbstractModel
         $this->client = $client;
 
         if (is_array($id_or_data)) {
-            $this->api = $client->api(static::$api_name, null);
+            $this->api = $client->api(
+                static::$api_name,
+                isset($id_or_data['id']) ? $id_or_data['id'] : null
+            );
             $this->fields = $this->api->getFields();
             $this->setData($id_or_data);
         } else {
@@ -145,7 +148,7 @@ abstract class AbstractModel
      */
     public function setCreatedAt($stringOrDateTime)
     {
-        $this->data['created_at'] = $stringOrDateTime instanceof DateTime
+        $this->data['created_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
             ? $stringOrDateTime->format('c') : $stringOrDateTime;
 
         return $this;
@@ -177,7 +180,7 @@ abstract class AbstractModel
      */
     public function setUpdatedAt($stringOrDateTime)
     {
-        $this->data['updated_at'] = $stringOrDateTime instanceof DateTime
+        $this->data['updated_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
             ? $stringOrDateTime->format('c') : $stringOrDateTime;
 
         return $this;
@@ -292,6 +295,7 @@ abstract class AbstractModel
      */
     protected function preSave()
     {
+        $this->setUpdatedAt(new DateTime('now'));
     }
 
     /**

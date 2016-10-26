@@ -74,7 +74,7 @@ class Order extends AbstractApi
         'fulfillments',         // @todo Api, Model(s)
         'client_details',
         'refunds',
-        'payment_details'              // @todo Api, Model
+        'payment_details'       // @todo Api, Model
     ];
 
     /** @var string $parameters_wrap */
@@ -87,7 +87,10 @@ class Order extends AbstractApi
     protected static $path = '/admin/orders/#id#.json';
 
     /** @var array $ignore_on_update_fields */
-    public static $ignore_on_update_fields = [];
+    public static $ignore_on_update_fields = [
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * Retrieve all orders (api limit is 250)

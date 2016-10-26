@@ -31,7 +31,7 @@ class Order extends AbstractModel
      */
     public function setClosedAt($stringOrDateTime)
     {
-        $this->data['closed_at'] = $stringOrDateTime instanceof DateTime
+        $this->data['closed_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
             ? $stringOrDateTime->format('c') : $stringOrDateTime;
 
         return $this;
