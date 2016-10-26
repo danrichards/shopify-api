@@ -4,6 +4,7 @@ An object-oriented approach towards using the Shopify API. It is currently a wor
 
 * [Order](https://help.shopify.com/api/reference/order)
 * [Product](https://help.shopify.com/api/reference/product)
+* [Variant](https://help.shopify.com/api/reference/product_variant)
 
 ## Composer
 
@@ -37,20 +38,13 @@ $shopify_client = new ShopifyClient($shopify_http_client);
 // Manager provide some conveniences and is available to bound to a container.
 $mgr = new Manager($shopify_client);
 
-$mgr->getProduct(123);              // returns ShopifyApi/Models/Product
-
-$mgr->getAllProducts();             // returns Collection of ShopifyApi/Models/Product
-
-$mgr->getOrder(12345);              // returns ShopifyApi/Models/Order
-
-$mgr->getAllOrders();               // returns a Collection of ShopifyApi/Models/Order
+$mgr->getProduct($product_id = 123);              // returns ShopifyApi/Models/Product
 
 // Alternatively, we may call methods on the API object.
-$mgr->api('products')->show(123);    // returns ShopifyApi/Models/Product
 
-$mgr->api('products')->all();        // returns Collection of ShopifyApi/Models/Product
+$mgr->api('products')->show($product_id = 123);   // returns array
 
-$mgr->api('products')->count();      // returns # of products
+See Facade usages for other methods available.
 ```
 
 ## Usage with Laravel
@@ -68,20 +62,35 @@ In your `config/app.php`
 ### Using the Facade gives you `Manager`
 
 ```
-Shopify::getProduct(123);               // returns ShopifyApi/Models/Product
+Shopify::getProduct($product_id = 123);     // returns ShopifyApi/Models/Product
 
-Shopify::getAllProducts();              // returns Collection of ShopifyApi/Models/Product
+Shopify::getAllProducts();                  // returns Collection of ShopifyApi/Models/Product
 
-Shopify::getOrder(12345);               // returns ShopifyApi/Models/Order
+Shopify::getVariant($variant_id = 456);     // returns ShopifyApi/Models/Variant
 
-Shopify::getAllOrders();                // returns a Collection of ShopifyApi/Models/Order
+Shopify::getAllVariants($product_id = 123); // returns Collection of ShopifyApi/Models/Variant
+
+Shopify::getOrder($order_id = 789);         // returns ShopifyApi/Models/Order
+
+Shopify::getAllOrders();                    // returns a Collection of ShopifyApi/Models/Order
 
 // Alternatively, we may call methods on the API object.
-Shopify::api('products')->show(123);    // returns ShopifyApi/Models/Product
 
-Shopify::api('products')->all();        // returns Collection of ShopifyApi/Models/Product
+Shopify::api('products')->show($product_id = 123);           // returns array
 
-Shopify::api('products')->count();      // returns # of products
+Shopify::api('products')->all();                             // returns array
+
+Shopify::api('products')->count();                           // returns int
+
+Shopify::api('variants')->show($variant_id = 456);           // returns array
+
+Shopify::api('variants')->product($product_id = 123)->all(); // returns array
+
+Shopify::api('orders')->show($order_id = 123);               // returns array
+
+Shopify::api('orders')->all();                               // returns array
+
+Shopify::api('orders')->count();                             // returns int
 ```
 
 Methods called on `Manager` will cascade down onto `Client` via the `__call` method.
