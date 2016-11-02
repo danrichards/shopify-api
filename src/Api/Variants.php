@@ -4,14 +4,17 @@ namespace ShopifyApi\Api;
 
 use BadMethodCallException;
 use ShopifyApi\Client;
+use ShopifyApi\Api\Traits\OwnsMetafields;
 
 /**
- * Class Product
+ * Class Variants
  *
  * API calls that can be carried out on a Product
  */
 class Variants extends AbstractApi
 {
+
+    use OwnsMetafields;
 
     /** @var string $parameters_wrap */
     protected static $parameters_wrap = 'variant';

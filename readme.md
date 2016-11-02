@@ -5,6 +5,7 @@ An object-oriented approach towards using the Shopify API. It is currently a wor
 * [Order](https://help.shopify.com/api/reference/order)
 * [Product](https://help.shopify.com/api/reference/product)
 * [Variant](https://help.shopify.com/api/reference/product_variant)
+* [Metafield](https://help.shopify.com/api/reference/metafield)
 
 ## Composer
 
@@ -61,6 +62,15 @@ In your `config/app.php`
     
 ### Using the Facade gives you `Manager`
 
+#### These are all effectively the same thing
+
+* `$p = (new Manager($shopify_client))->getProduct(123); // see above for $shopify_client`
+* `$p = new \ShopifyApi\Models\Product($shopify_client, 123);`
+* `$p = new \ShopifyApi\Models\Product($shopify_client, Shopify::api('products')->show(123));`
+* `$p = Shopify::getProduct(123);`
+
+#### Examples of getting data.
+
 ```
 Shopify::getProduct($product_id = 123);     // returns ShopifyApi/Models/Product
 
@@ -73,6 +83,8 @@ Shopify::getAllVariants($product_id = 123); // returns Collection of ShopifyApi/
 Shopify::getOrder($order_id = 789);         // returns ShopifyApi/Models/Order
 
 Shopify::getAllOrders();                    // returns a Collection of ShopifyApi/Models/Order
+
+Shopify::getMetafield($metafield_id = 123); // returns ShopifyApi/Models/Metafield
 
 // Alternatively, we may call methods on the API object.
 
@@ -91,6 +103,42 @@ Shopify::api('orders')->show($order_id = 123);               // returns array
 Shopify::api('orders')->all();                               // returns array
 
 Shopify::api('orders')->count();                             // returns int
+```
+
+#### Examples of saving data.
+
+##### Creating a product using a model
+
+```
+$product = Shopify::getProduct();
+$product->setTitle('Burton Custom Freestyle 151');
+$product->setBodyHtml('<strong>Good snowboard!<\/strong>');
+$product->setVendor('Burton');
+$product->setProductType('Snowboard');
+$product->setTags(['Barnes & Noble', 'John\'s Fav', '"Big Air"']);
+$product->save();
+```
+
+##### Updating a product using a model
+
+```
+$product = Shopify::getProduct(123);
+$product->setTitle('Burton Freestyle 152');
+$product->save();
+```
+
+##### Creating and updating metafields for resources is more intuitive using key / namespace.
+
+```
+// The 'value_type' property will be determined automatically if omitted
+$product->createMetafield('in_stock', 'inventory', ['value' => 123]); 
+
+$product->updateMetafield('in_stock', 'inventory', ['value' => 122]);
+
+$product->updateOrCreateMetafield('in_stock', 'inventory', ['value' => 200]);
+
+// Support is included for arrays and objects (json encodable) and null
+$product->createMetafield('board_specs', 'criteria', ['value' => new MyJsonSerializbleObject()]);
 ```
 
 Methods called on `Manager` will cascade down onto `Client` via the `__call` method.
@@ -139,6 +187,8 @@ class ShopifyServiceProvider extends BaseServiceProvider
             $key = "shopify_product_".((string) $params);
             
             // Assuming you Cache::put($key, $product->getData()); elsewhere
+            // If the cache is empty, the resource will be fetched from the api
+            // as normal.
             $data = Cache::get($key);
             
             return $data ? new Product($client, $data) : null;
@@ -150,6 +200,11 @@ class ShopifyServiceProvider extends BaseServiceProvider
 ## Special Thanks
 
 This repository's structure was modeled after the robust [`cdaguerre/php-trello-api`](https://github.com/cdaguerre/php-trello-api).
+
+## Todo
+
+* Migrate from `"guzzle/guzzle"` to `guzzlehttp`, bump version.
+* Model support for deletion. A `remove()` method.
 
 ## License
 

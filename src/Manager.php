@@ -3,7 +3,7 @@
 namespace ShopifyApi;
 
 use BadMethodCallException;
-use ShopifyApi\Api\Variants;
+use ShopifyApi\Models\Metafield;
 use ShopifyApi\Models\Order;
 use ShopifyApi\Models\Product;
 use ShopifyApi\Models\Variant;
@@ -109,7 +109,6 @@ class Manager
     /**
      * Get a variant by id or create a new one
      *
-     * @soon
      * @param int $id Variant id
      * @return Variant
      */
@@ -123,7 +122,6 @@ class Manager
      * Get all the variants from a response as an array of Models or a
      * Collection of Models for Laravel.
      *
-     * @soon
      * @param $product_id
      * @return array|\Illuminate\Support\Collection
      */
@@ -131,6 +129,18 @@ class Manager
     {
         $variants = $this->getProduct($product_id)->variants();
         return defined('LARAVEL_START') ? collect($variants) : $variants;
+    }
+
+    /**
+     * Get a variant by id or create a new one
+     *
+     * @param int $id Metafield id
+     * @return Metafield
+     */
+    public function getMetafield($id = null)
+    {
+        return $this->fetchFromApiCache(Metafield::class, $id)
+            ?: new Metafield($this->client, $id);
     }
 
     /**

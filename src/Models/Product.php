@@ -4,6 +4,7 @@ namespace ShopifyApi\Models;
 
 use DateTime;
 use DateTimeZone;
+use ShopifyApi\Models\Traits\OwnsMetafields;
 
 /**
  * Class Product
@@ -44,6 +45,8 @@ use DateTimeZone;
  */
 class Product extends AbstractModel
 {
+
+    use OwnsMetafields;
 
     /** @var string $api_name */
     protected static $api_name = 'product';

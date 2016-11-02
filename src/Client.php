@@ -2,6 +2,7 @@
 
 namespace ShopifyApi;
 
+use ShopifyApi\Api\Metafield;
 use ShopifyApi\Api\Order;
 use ShopifyApi\Api\Product;
 use ShopifyApi\Api\Variants;
@@ -94,6 +95,10 @@ class Client
             case 'variant':
             case 'variants':
                 $api = new Variants($this);
+                break;
+            case 'metafield':
+            case 'metafields':
+                $api = new Metafield($this);
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('Undefined api called: "%s"', $name));

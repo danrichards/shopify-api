@@ -213,8 +213,6 @@ abstract class AbstractApi
 
         $body = json_encode($parameters);
 
-//        dd($path, $body, $request_headers);
-
         $response = $this->client
             ->getHttpClient()
             ->put($path, $body, $request_headers);
@@ -236,24 +234,24 @@ abstract class AbstractApi
         return $this->patch($path, $parameters, $request_headers, $normalize);
     }
 
-//    /**
-//     * Send a DELETE request with JSON-encoded parameters.
-//     *
-//     * @param string $path           Request path.
-//     * @param array  $parameters     POST parameters to be JSON encoded.
-//     * @param array  $request_headers Request headers.
-//     * @return mixed
-//     */
-//    protected function delete($path, array $parameters = array(), $request_headers = array())
-//    {
-//        $response = $this->client->getHttpClient()->delete(
-//            $path,
-//            $this->createParametersBody($parameters),
-//            $request_headers
-//        );
-//
-//        return ResponseMediator::getContent($response);
-//    }
+    /**
+     * Send a DELETE request with JSON-encoded parameters.
+     *
+     * @param string $path           Request path.
+     * @param array  $parameters     POST parameters to be JSON encoded.
+     * @param array  $request_headers Request headers.
+     * @return mixed
+     */
+    protected function delete($path, array $parameters = [], $request_headers = [])
+    {
+        $response = $this->client->getHttpClient()->delete(
+            $path,
+            $this->createParametersBody($parameters),
+            $request_headers
+        );
+
+        return ResponseMediator::getContent($response);
+    }
 
     /**
      * Prepare request parameters.

@@ -3,6 +3,7 @@
 namespace ShopifyApi\Models;
 
 use ShopifyApi\Client;
+use ShopifyApi\Models\Traits\OwnsMetafields;
 
 /**
  * Class Variant
@@ -69,6 +70,8 @@ use ShopifyApi\Client;
  */
 class Variant extends AbstractModel
 {
+
+    use OwnsMetafields;
 
     /** @var string $api_name */
     protected static $api_name = 'variant';
