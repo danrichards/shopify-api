@@ -163,10 +163,6 @@ trait OwnsMetafields
             return $this->deleteMetafield($key, $namespace);
         }
 
-        try {
-            return $this->updateMetafield($key, $namespace, $attributes);
-        } catch (BadMethodCallException $e) {
-            return $this->createMetafield($key, $namespace, $attributes);
-        }
+        return $this->updateOrCreateMetafield($key, $namespace, $attributes);
     }
 }
