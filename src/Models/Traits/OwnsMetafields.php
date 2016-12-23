@@ -122,6 +122,21 @@ trait OwnsMetafields
     }
 
     /**
+     * @param string $key
+     * @param string $namespace
+     *
+     * @return boolean | BadMethodCallException
+     */
+    public function deleteMetafield($key, $namespace)
+    {
+        if (empty($updated = $this->getMetafield($key, $namespace))) {
+            throw new BadMethodCallException('Metafield does not exist.');
+        }
+
+        $updated->remove();
+        return true;
+    }
+    /**
      * @param $key
      * @param $namespace
      * @param array $attributes
@@ -136,4 +151,22 @@ trait OwnsMetafields
         }
     }
 
+    /**
+     * @param $key
+     * @param $namespace
+     * @param array $attributes
+     * @return Metafield | bool | BadMethodCallException
+     */
+    public function updateCreateOrRemoveMetafield($key, $namespace, array $attributes = [])
+    {
+        if(!isset($attributes['value']) || empty($attributes['value'])){
+            return $this->deleteMetafield($key, $namespace);
+        }
+
+        try {
+            return $this->updateMetafield($key, $namespace, $attributes);
+        } catch (BadMethodCallException $e) {
+            return $this->createMetafield($key, $namespace, $attributes);
+        }
+    }
 }
