@@ -2,7 +2,7 @@
 
 namespace ShopifyApi\Models;
 
-use Guzzle\Common\Exception\BadMethodCallException;
+use BadMethodCallException;
 
 /**
  * Class Metafield
