@@ -3,12 +3,15 @@
 namespace ShopifyApi\Models;
 
 use DateTime;
+use ShopifyApi\Models\Traits\OwnsMetafields;
 
 /**
  * Class Order
  */
 class Order extends AbstractModel
 {
+
+    use OwnsMetafields;
 
     /** @var string $api_name */
     protected static $api_name = 'order';
@@ -31,7 +34,7 @@ class Order extends AbstractModel
      */
     public function setClosedAt($stringOrDateTime)
     {
-        $this->data['closed_at'] = $stringOrDateTime instanceof DateTime
+        $this->data['closed_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
             ? $stringOrDateTime->format('c') : $stringOrDateTime;
 
         return $this;

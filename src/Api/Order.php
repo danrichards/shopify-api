@@ -2,6 +2,8 @@
 
 namespace ShopifyApi\Api;
 
+use ShopifyApi\Api\Traits\OwnsMetafields;
+
 /**
  * Class Order
  *
@@ -9,6 +11,8 @@ namespace ShopifyApi\Api;
  */
 class Order extends AbstractApi
 {
+
+    use OwnsMetafields;
 
     /** @var string $api_name */
     protected static $api_name = 'order';
@@ -74,7 +78,7 @@ class Order extends AbstractApi
         'fulfillments',         // @todo Api, Model(s)
         'client_details',
         'refunds',
-        'payment_details'              // @todo Api, Model
+        'payment_details'       // @todo Api, Model
     ];
 
     /** @var string $parameters_wrap */
@@ -130,6 +134,22 @@ class Order extends AbstractApi
     public function show($id, array $params = [])
     {
         return $this->get($this->getPath($id), $params);
+    }
+
+    /**
+     * Create an Order
+     *
+     * @link https://help.shopify.com/api/reference/order#create
+     *
+     * @param array  $params Attributes
+     *
+     * @return array
+     */
+    public function create(array $params = array())
+    {
+        $order = $params;
+
+        return $this->post('/admin/orders.json', compact('order'));
     }
 
     /**

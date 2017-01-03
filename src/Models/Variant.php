@@ -3,6 +3,7 @@
 namespace ShopifyApi\Models;
 
 use ShopifyApi\Client;
+use ShopifyApi\Models\Traits\OwnsMetafields;
 
 /**
  * Class Variant
@@ -28,7 +29,6 @@ use ShopifyApi\Client;
  * @method string getWeightUnit()
  * @method string getOldInventoryQuantity()
  * @method string getRequiresShipping()
- * @method string setTitle(string $title)
  * @method string setProductId(int $product_id)
  * @method string setPrice(float $price)
  * @method string setSku(string $sku)
@@ -71,6 +71,8 @@ use ShopifyApi\Client;
 class Variant extends AbstractModel
 {
 
+    use OwnsMetafields;
+
     /** @var string $api_name */
     protected static $api_name = 'variant';
 
@@ -84,16 +86,30 @@ class Variant extends AbstractModel
      * Constructor.
      *
      * @param Client $client
-     * @param int $id           The id of the Variant
+     * @param int $id_or_data   The id of the Variant
      * @param int $product_id   The id of the Product
      */
-    public function __construct(Client $client, $id = null, $product_id = null)
+    public function __construct(Client $client, $id_or_data = null, $product_id = null)
     {
         if ($product_id) {
             $this->product_id = $product_id;
         }
 
-        parent::__construct($client, $id, $product_id);
+        $this->client = $client;
+
+        if (is_array($id_or_data)) {
+            $id =isset($id_or_data['id']) ? $id_or_data['id'] : null;
+            $this->api = $client->api(static::$api_name, $id);
+            $this->fields = $this->api->product($product_id)->getFields();
+            $this->setData($id_or_data);
+        } else {
+            $this->api = $client->api(static::$api_name, $id_or_data);
+            $this->fields = $this->api->product($product_id)->getFields();
+            if ($id_or_data) {
+                $this->id = $id_or_data;
+                $this->refresh();
+            }
+        }
     }
 
     /**
@@ -109,6 +125,26 @@ class Variant extends AbstractModel
         $this->postRefresh();
 
         return $this;
+    }
+
+    /**
+     * When you set the title, option1 must match it.
+     *
+     * @param $title
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->setOption1($title);
+        return $this;
+    }
+
+    /**
+     * @return \ShopifyApi\Models\Product
+     */
+    public function product()
+    {
+        return new Product($this->client, $this->getProductId());
     }
 
 }

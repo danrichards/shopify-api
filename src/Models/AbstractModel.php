@@ -3,6 +3,7 @@
 namespace ShopifyApi\Models;
 
 use DateTime;
+use DateTimeZone;
 use ShopifyApi\Util;
 use ShopifyApi\Client;
 use BadMethodCallException;
@@ -45,10 +46,16 @@ abstract class AbstractModel
     {
         $this->client = $client;
 
+        // Skip api call (refresh) if we already have the data
         if (is_array($id_or_data)) {
-            $this->api = $client->api(static::$api_name, null);
+            $this->api = $client->api(
+                static::$api_name,
+                isset($id_or_data['id']) ? $id_or_data['id'] : null
+            );
             $this->fields = $this->api->getFields();
             $this->setData($id_or_data);
+
+        // Otherwise, pull data from api
         } else {
             $this->api = $client->api(static::$api_name, $id_or_data);
             $this->fields = $this->api->getFields();
@@ -144,28 +151,30 @@ abstract class AbstractModel
      */
     public function setCreatedAt($stringOrDateTime)
     {
-        $this->data['created_at'] = $stringOrDateTime instanceof DateTime
+        $this->data['created_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
             ? $stringOrDateTime->format('c') : $stringOrDateTime;
 
         return $this;
     }
 
     /**
+     * @param DateTimeZone $time_zone
      * @return DateTime|null
      */
-    public function getCreatedAt()
+    public function getCreatedAt(DateTimeZone $time_zone = null)
     {
         return is_null($date = $this->getOriginal('created_at'))
-            ? $date : new DateTime($date);
+            ? $date : new DateTime($date, $time_zone);
     }
 
     /**
+     * @param DateTimeZone $time_zone
      * @return DateTime|null
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(DateTimeZone $time_zone = null)
     {
         return is_null($date = $this->getOriginal('updated_at'))
-            ? $date : new DateTime($date);
+            ? $date : new DateTime($date, $time_zone);
     }
 
     /**
@@ -174,7 +183,7 @@ abstract class AbstractModel
      */
     public function setUpdatedAt($stringOrDateTime)
     {
-        $this->data['updated_at'] = $stringOrDateTime instanceof DateTime
+        $this->data['updated_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
             ? $stringOrDateTime->format('c') : $stringOrDateTime;
 
         return $this;
@@ -218,21 +227,21 @@ abstract class AbstractModel
     /**
      * @return $this
      */
-    public function remove()
-    {
-        try {
-            $this->preRemove();
-            $this->api->remove($this->id);
-            $this->postRemove();
-        } catch (BadMethodCallException $e) {
-            throw new BadMethodCallException(sprintf(
-                "You can't remove %s objects.",
-                get_called_class()
-            ));
-        }
-
-        return $this;
-    }
+//    public function remove()
+//    {
+//        try {
+//            $this->preRemove();
+//            $this->api->delete($this->id);
+//            $this->postRemove();
+//        } catch (BadMethodCallException $e) {
+//            throw new BadMethodCallException(sprintf(
+//                "You can't remove %s objects.",
+//                get_called_class()
+//            ));
+//        }
+//
+//        return $this;
+//    }
 
     /**
      * Get multiple results from the Api and map them to Models
@@ -277,8 +286,8 @@ abstract class AbstractModel
     protected function create()
     {
         $this->preCreate();
-        $this->data = $this->api->create($this->data);
-        $this->id   = $this->data['id'];
+        $this->data = $this->api->create($this->data)[static::$api_name];
+        $this->id = $this->data['id'];
         $this->postCreate();
 
         return $this;
@@ -289,6 +298,7 @@ abstract class AbstractModel
      */
     protected function preSave()
     {
+        $this->setUpdatedAt(new DateTime('now'));
     }
 
     /**

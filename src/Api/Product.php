@@ -2,6 +2,9 @@
 
 namespace ShopifyApi\Api;
 
+use ShopifyApi\Models\Variant;
+use ShopifyApi\Api\Traits\OwnsMetafields;
+
 /**
  * Class Product
  *
@@ -9,6 +12,8 @@ namespace ShopifyApi\Api;
  */
 class Product extends AbstractApi
 {
+
+    use OwnsMetafields;
 
     /** @var string $parameters_wrap */
     protected static $parameters_wrap = 'product';
@@ -86,6 +91,22 @@ class Product extends AbstractApi
     }
 
     /**
+     * Create a Product
+     *
+     * @link https://help.shopify.com/api/reference/product#create
+     *
+     * @param array  $params Attributes
+     *
+     * @return array
+     */
+    public function create(array $params = array())
+    {
+        $product = $params;
+
+        return $this->post('/admin/products.json', compact('product'));
+    }
+
+    /**
      * Update a Product
      *
      * @link https://help.shopify.com/api/reference/product#update
@@ -106,7 +127,10 @@ class Product extends AbstractApi
      */
     public function variants()
     {
-        return new Variants($this->client);
+        $variants = $this->getVariants();
+        return array_map(function($variant) {
+            return new Variant($this->client, $variant);
+        }, $variants);
     }
 
 }

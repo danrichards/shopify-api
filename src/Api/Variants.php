@@ -4,14 +4,17 @@ namespace ShopifyApi\Api;
 
 use BadMethodCallException;
 use ShopifyApi\Client;
+use ShopifyApi\Api\Traits\OwnsMetafields;
 
 /**
- * Class Product
+ * Class Variants
  *
  * API calls that can be carried out on a Product
  */
 class Variants extends AbstractApi
 {
+
+    use OwnsMetafields;
 
     /** @var string $parameters_wrap */
     protected static $parameters_wrap = 'variant';
@@ -64,11 +67,21 @@ class Variants extends AbstractApi
      * @param int|null $product_id
      * @param int|null $variant_id
      */
-    public function __construct($client, $product_id = null, $variant_id = null)
+    public function __construct($client, $variant_id = null, $product_id = null)
     {
         parent::__construct($client);
-        $this->product_id = $product_id;
         $this->variant_id = $variant_id;
+        $this->product_id = $product_id;
+    }
+
+    /**
+     * @param $product_id
+     * @return $this
+     */
+    public function product($product_id)
+    {
+        $this->product_id = $product_id;
+        return $this;
     }
 
     /**
