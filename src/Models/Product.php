@@ -3,6 +3,7 @@
 namespace ShopifyApi\Models;
 
 use DateTime;
+use DateTimeZone;
 
 /**
  * Class Product
@@ -73,12 +74,13 @@ class Product extends AbstractModel
     }
 
     /**
+     * @param DateTimeZone $time_zone
      * @return DateTime|null
      */
-    public function getPublishedAt()
+    public function getPublishedAt(DateTimeZone $time_zone = null)
     {
         return is_null($date = $this->getOriginal('published_at'))
-            ? $date : new DateTime($date);
+            ? $date : new DateTime($date, $time_zone);
     }
 
     /**
