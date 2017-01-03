@@ -2,6 +2,8 @@
 
 namespace ShopifyApi\Models;
 
+use BadMethodCallException;
+
 /**
  * Class Metafield
  *
@@ -100,6 +102,36 @@ class Metafield extends AbstractModel
         }
         $this->id = $this->data['id'];
         $this->postCreate();
+
+        return $this;
+    }
+
+    /**
+     * Remove the object through API
+     *
+     * @return $this
+     */
+    public function remove()
+    {
+        try {
+            $this->preRemove();
+            $this->id = $this->data['id'];
+            if ($this->owner_resource) {
+                $api_owner = $this->owner_resource;
+                $this->data = $this
+                    ->api
+                    ->$api_owner($this->owner_id)
+                    ->delete($this->data['id']);
+            } else {
+                $this->data = $this->api->delete($this->data['id']);
+            }
+            $this->postRemove();
+        } catch (BadMethodCallException $e) {
+            throw new BadMethodCallException(sprintf(
+                "You can't remove %s objects.",
+                get_called_class()
+            ));
+        }
 
         return $this;
     }
