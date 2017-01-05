@@ -160,6 +160,9 @@ trait OwnsMetafields
     public function updateCreateOrRemoveMetafield($key, $namespace, array $attributes = [])
     {
         if(!isset($attributes['value']) || empty($attributes['value'])){
+            if(empty($this->getMetafield($key, $namespace))){
+                return false;
+            }
             return $this->deleteMetafield($key, $namespace);
         }
 
