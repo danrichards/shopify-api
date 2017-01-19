@@ -14,7 +14,7 @@ class Discount extends AbstractApi
 {
 
     /** @var string $parameters_wrap */
-    protected static $parameters_wrap = 'discount';
+    protected static $parameters_wrap = 'discounts';
 
     /** @var string $parameters_wrap_many */
     protected static $parameters_wrap_many = 'discounts';
