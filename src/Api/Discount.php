@@ -88,7 +88,6 @@ class Discount extends AbstractApi
      *
      * @param string $id     the discount's id
      * @param array  $params optional attributes
-     *
      * @return array discount
      */
     public function show($id, array $params = [])
@@ -97,32 +96,44 @@ class Discount extends AbstractApi
     }
 
     /**
-     * Update a Metafield
+     * Disable a discount
      *
-     * @link https://help.shopify.com/api/reference/metafield#update
+     * @link https://help.shopify.com/api/reference/discount#disable
+     * @param string $id     the discount's id
      *
-     * @param $id
-     * @param array $params
-     * @return array
+     * @return array discount
      */
-    public function update($id, array $params = [])
+    public function disable($id)
     {
-        return $this->put("/admin/discounts/{$id}.json", $params);
+        return $this->post("/admin/discounts/{$id}/disable.json");
     }
 
     /**
-     * Delete a Metafield
+     * Enable a discount
      *
-     * @link https://help.shopify.com/api/reference/metafield#destroy
+     * @link https://help.shopify.com/api/reference/discount#enable
+     * @param string $id     the discount's id
      *
-     * @param string $id
-     * @param array $params
-     * @param array $request_headers
-     * @return array
+     * @return array discount
      */
-    public function delete($id, array $params = [], $request_headers = [])
+    public function enable($id)
     {
-        return parent::delete("/admin/discounts/{$id}.json", $params);
+        return $this->post("/admin/discounts/{$id}/enable.json");
+    }
+
+    /**
+     * Delete a discount
+     *
+     * @link https://help.shopify.com/api/reference/discount#delete
+     * @param string $id the discount's id
+     *
+     * @param array $parameters
+     * @param array $request_headers
+     * @return array discount
+     */
+    public function delete($id, array $parameters = [], $request_headers = [])
+    {
+        return parent::delete("/admin/discounts/{$id}.json");
     }
 
 }
