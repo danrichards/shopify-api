@@ -2,6 +2,7 @@
 
 namespace ShopifyApi;
 
+use ShopifyApi\Api\Discount;
 use ShopifyApi\Api\Metafield;
 use ShopifyApi\Api\Order;
 use ShopifyApi\Api\Product;
@@ -99,6 +100,10 @@ class Client
             case 'metafield':
             case 'metafields':
                 $api = new Metafield($this);
+                break;
+            case 'discount':
+            case 'discounts':
+                $api = new Discount($this);
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('Undefined api called: "%s"', $name));
