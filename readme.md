@@ -6,6 +6,7 @@ An object-oriented approach towards using the Shopify API. It is currently a wor
 * [Product](https://help.shopify.com/api/reference/product)
 * [Variant](https://help.shopify.com/api/reference/product_variant)
 * [Metafield](https://help.shopify.com/api/reference/metafield)
+* [Discount](https://help.shopify.com/api/reference/discount) - Shopify Plus
 
 ## Composer
 
@@ -86,6 +87,10 @@ Shopify::getAllOrders();                    // returns a Collection of ShopifyAp
 
 Shopify::getMetafield($metafield_id = 123); // returns ShopifyApi/Models/Metafield
 
+Shopify::getDiscount($dicount_id = 123);     // returns ShopifyApi/Models/Discount
+
+Shopify::getAllDiscounts();                  // returns Collection of ShopifyApi/Models/Discount
+
 // Alternatively, we may call methods on the API object.
 
 Shopify::api('products')->show($product_id = 123);           // returns array
@@ -103,6 +108,10 @@ Shopify::api('orders')->show($order_id = 123);               // returns array
 Shopify::api('orders')->all();                               // returns array
 
 Shopify::api('orders')->count();                             // returns int
+
+Shopify::api('discounts')->show($discount_id = 123);         // returns array
+
+Shopify::api('discounts')->all();                             // returns array
 ```
 
 #### Examples of saving data.
