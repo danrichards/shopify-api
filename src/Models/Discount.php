@@ -28,31 +28,38 @@ use BadMethodCallException;
  * @method string setStartsAt(string $starts_at)
  * @method string setStatus(string $status)
  * @method string setMinimunOrderAmount(string $minimun_order_amount)
- * @method string setUsageLimit(string $usage_limit)
- * @method string setAppliesToId(string $applies_to_id)
- * @method string setAppliesOnce(int $applies_once)
+ * @method int setUsageLimit(string $usage_limit)
+ * @method int setAppliesToId(string $applies_to_id)
+ * @method boolean setAppliesOnce(boolean $applies_once)
  * @method boolean setAppliesOncePerCustomer(boolean $applies_once_per_customer)
- * @method boolean setDiscountType(boolean $discount_type)
+ * @method string setDiscountType(string $discount_type)
  * @method string setAppliesToResource(string $applies_to_resource)
  *
- * @method bool hasNamespace()
- * @method bool hasKey()
  * @method bool hasValue()
- * @method bool hasValueType()
- * @method bool hasDescription()
- * @method bool hasOwnerId()
- * @method bool hasOwnerResource()
- * @method bool hasTitle()
+ * @method bool hasEndsAt()
+ * @method bool hasMinimunOrderAmount()
+ * @method bool hasUsageLimit()
+ * @method bool hasAppliesToId()
+ * @method bool hasAppliesToResource()
  */
 class Discount extends AbstractModel
 {
 
     /** @var string $api_name */
-    protected static $api_name = 'discounts';
+    protected static $api_name = 'discount';
 
     /** @var array $load_params */
     protected static $load_params = [];
 
+    /**
+     * Delete Discount
+     *
+     * @return $this
+     */
+    public function delete()
+    {
+        return $this->remove();
+    }
     /**
      * Remove the object through API
      *
@@ -75,4 +82,47 @@ class Discount extends AbstractModel
         return $this;
     }
 
+    /**
+     * Disable Discount
+     *
+     * @return $this
+     */
+    public function disable()
+    {
+        try {
+            $this->id = $this->data['id'];
+            if($this->data['status'] != 'disabled') {
+                $this->data = $this->api->disable($this->data['id']);
+            }
+        } catch (BadMethodCallException $e) {
+            throw new BadMethodCallException(sprintf(
+                "You can't disable %s objects.",
+                get_called_class()
+            ));
+        }
+
+        return $this;
+    }
+
+    /**
+     * Enable Discount
+     *
+     * @return $this
+     */
+    public function enable()
+    {
+        try {
+            $this->id = $this->data['id'];
+            if($this->data['status'] != 'enabled') {
+                $this->data = $this->api->enable($this->data['id']);
+            }
+        } catch (BadMethodCallException $e) {
+            throw new BadMethodCallException(sprintf(
+                "You can't disable %s objects.",
+                get_called_class()
+            ));
+        }
+
+        return $this;
+    }
 }
