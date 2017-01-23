@@ -3,6 +3,7 @@
 namespace ShopifyApi;
 
 use BadMethodCallException;
+use ShopifyApi\Models\Discount;
 use ShopifyApi\Models\Metafield;
 use ShopifyApi\Models\Order;
 use ShopifyApi\Models\Product;
@@ -182,4 +183,31 @@ class Manager
         }
     }
 
+    /**
+     * Get a discount by id or create a new one
+     *
+     * @param int $id the Discount id
+     *
+     * @return Discount
+     */
+    public function getDiscount($id = null)
+    {
+        return $this->fetchFromApiCache(Discount::class, $id)
+            ?: new Discount($this->client, $id);
+    }
+
+    /**
+     * Get all the discounts as an array of Models or a
+     * Collection of Models for Laravel.
+     *
+     * @param array $params
+     * @return \Illuminate\Support\Collection|array
+     */
+    public function getAllDiscounts(array $params = [])
+    {
+        $discounts = $this->fetchFromApiCache(Discount::class, $params)
+            ?: (new Discount($this->client))->all($params);
+
+        return defined('LARAVEL_START') ? collect($discounts) : $discounts;
+    }
 }
