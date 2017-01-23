@@ -206,6 +206,10 @@ class ShopifyServiceProvider extends BaseServiceProvider
 }
 ```
 
+## Contributors
+
+- [Diogo Gomes](https://github.com/diogogomeswww)
+
 ## Special Thanks
 
 This repository's structure was modeled after the robust [`cdaguerre/php-trello-api`](https://github.com/cdaguerre/php-trello-api).
