@@ -227,21 +227,21 @@ abstract class AbstractModel
     /**
      * @return $this
      */
-//    public function remove()
-//    {
-//        try {
-//            $this->preRemove();
-//            $this->api->delete($this->id);
-//            $this->postRemove();
-//        } catch (BadMethodCallException $e) {
-//            throw new BadMethodCallException(sprintf(
-//                "You can't remove %s objects.",
-//                get_called_class()
-//            ));
-//        }
-//
-//        return $this;
-//    }
+    public function remove()
+    {
+        try {
+            $this->preRemove();
+            $this->api->delete($this->id);
+            $this->postRemove();
+        } catch (BadMethodCallException $e) {
+            throw new BadMethodCallException(sprintf(
+                "You can't remove %s objects.",
+                get_called_class()
+            ));
+        }
+
+        return $this;
+    }
 
     /**
      * Get multiple results from the Api and map them to Models

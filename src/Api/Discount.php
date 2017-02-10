@@ -122,18 +122,42 @@ class Discount extends AbstractApi
     }
 
     /**
-     * Delete a discount
+     * Delete a discount (delete or remove do the same)
+     *
+     * @link https://help.shopify.com/api/reference/discount#delete
+     * @param string $id the discount's id
+     *
+     * @return array empty
+     */
+    public function remove($id)
+    {
+        return parent::delete("/admin/discounts/{$id}.json");
+    }
+
+    /**
+     * Delete a discount (delete or remove do the same)
      *
      * @link https://help.shopify.com/api/reference/discount#delete
      * @param string $id the discount's id
      *
      * @param array $parameters
      * @param array $request_headers
-     * @return array discount
+     * @return array empty
      */
     public function delete($id, array $parameters = [], $request_headers = [])
     {
         return parent::delete("/admin/discounts/{$id}.json");
     }
 
+    /**
+     * Update a Discount is not possible
+     *
+     * @param $id
+     * @param array $params
+     * @return BadMethodCallException
+     */
+    public function update($id, array $params = [])
+    {
+        throw new BadMethodCallException("Discount can't be updated. The can only by enabled, disabled and removed.");
+    }
 }

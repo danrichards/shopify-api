@@ -60,27 +60,6 @@ class Discount extends AbstractModel
     {
         return $this->remove();
     }
-    /**
-     * Remove the object through API
-     *
-     * @return $this
-     */
-    public function remove()
-    {
-        try {
-            $this->preRemove();
-            $this->id = $this->data['id'];
-            $this->data = $this->api->delete($this->data['id']);
-            $this->postRemove();
-        } catch (BadMethodCallException $e) {
-            throw new BadMethodCallException(sprintf(
-                "You can't remove %s objects.",
-                get_called_class()
-            ));
-        }
-
-        return $this;
-    }
 
     /**
      * Disable Discount
@@ -124,5 +103,15 @@ class Discount extends AbstractModel
         }
 
         return $this;
+    }
+
+    /**
+     * Update a Discount is not possible
+     *
+     * @return BadMethodCallException
+     */
+    public function update()
+    {
+        throw new BadMethodCallException("Discount can't be updated. The can only by enabled, disabled and removed.");
     }
 }
