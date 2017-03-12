@@ -3,12 +3,12 @@
 namespace ShopifyApi;
 
 use BadMethodCallException;
-use ShopifyApi\Api\Webhook;
 use ShopifyApi\Models\Discount;
 use ShopifyApi\Models\Metafield;
 use ShopifyApi\Models\Order;
 use ShopifyApi\Models\Product;
 use ShopifyApi\Models\Variant;
+use ShopifyApi\Models\Webhook;
 
 /**
  * Class Manager

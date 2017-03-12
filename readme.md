@@ -92,6 +92,8 @@ Shopify::getDiscount($dicount_id = 123);     // returns ShopifyApi/Models/Discou
 
 Shopify::getAllDiscounts();                  // returns Collection of ShopifyApi/Models/Discount
 
+Shopify::getAllWebhooks();                  // returns Collection of ShopifyApi/Models/Webhook
+
 // Alternatively, we may call methods on the API object.
 
 Shopify::api('products')->show($product_id = 123);           // returns array
