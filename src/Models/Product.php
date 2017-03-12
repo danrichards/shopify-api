@@ -30,6 +30,7 @@ use ShopifyApi\Models\Traits\OwnsMetafields;
  * @method array setVariants(array $variants)
  * @method array setOptions(array $options)
  * @method array setImages(array $images)
+ * @method array setMetafields(array $metafields)
  * @method array setImage(array $image)
  * @method bool hasTitle()
  * @method bool hasBodyHtml()
