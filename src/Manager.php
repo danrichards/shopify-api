@@ -226,4 +226,5 @@ class Manager
 
         return defined('LARAVEL_START') ? collect($discounts) : $discounts;
     }
+
 }
