@@ -20,6 +20,14 @@ use ShopifyApi\Api\Webhook;
  * @method \ShopifyApi\Api\Product products()
  * @method \ShopifyApi\Api\Order order()
  * @method \ShopifyApi\Api\Order orders()
+ * @method \ShopifyApi\Api\Variants variant()
+ * @method \ShopifyApi\Api\Variants variants()
+ * @method \ShopifyApi\Api\Metafield metafield()
+ * @method \ShopifyApi\Api\Metafield metafields()
+ * @method \ShopifyApi\Api\Discount discount()
+ * @method \ShopifyApi\Api\Discount discounts()
+ * @method \ShopifyApi\Api\Webhook webhook()
+ * @method \ShopifyApi\Api\Webhook webhooks()
  */
 class Client
 {

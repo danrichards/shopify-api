@@ -3,6 +3,7 @@
 namespace ShopifyApi;
 
 use BadMethodCallException;
+use ShopifyApi\Api\Webhook;
 use ShopifyApi\Models\Discount;
 use ShopifyApi\Models\Metafield;
 use ShopifyApi\Models\Order;
@@ -105,6 +106,21 @@ class Manager
             ?: (new Order($this->client))->all($params);
 
         return defined('LARAVEL_START') ? collect($orders) : $orders;
+    }
+
+    /**
+     * Get all the webhooks from a response as an array of Models or a
+     * Collection of Models for Laravel.
+     *
+     * @param array $params
+     * @return \Illuminate\Support\Collection|array
+     */
+    public function getAllWebhooks(array $params = [])
+    {
+        $webhooks = $this->fetchFromApiCache(Webhook::class, $params)
+            ?: (new Webhook($this->client))->all($params);
+
+        return defined('LARAVEL_START') ? collect($webhooks) : $webhooks;
     }
 
     /**

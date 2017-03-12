@@ -15,7 +15,7 @@ class Webhook extends AbstractApi
 {
 
     /** @var string $parameters_wrap */
-    protected static $parameters_wrap = 'webhooks';
+    protected static $parameters_wrap = 'webhook';
 
     /** @var string $parameters_wrap_many */
     protected static $parameters_wrap_many = 'webhooks';
