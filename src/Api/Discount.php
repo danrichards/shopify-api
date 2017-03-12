@@ -8,7 +8,7 @@ use ShopifyApi\Client;
 /**
  * Class Discount
  *
- * API calls that can be carried out on a Product
+ * API calls that can be carried out on a Discount
  */
 class Discount extends AbstractApi
 {
