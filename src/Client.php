@@ -11,6 +11,7 @@ use BadMethodCallException;
 use InvalidArgumentException;
 use ShopifyApi\Api\AbstractApi;
 use Guzzle\Http\Client as GuzzleClient;
+use ShopifyApi\Api\Webhook;
 
 /**
  * Simple PHP Shopify client
@@ -19,6 +20,14 @@ use Guzzle\Http\Client as GuzzleClient;
  * @method \ShopifyApi\Api\Product products()
  * @method \ShopifyApi\Api\Order order()
  * @method \ShopifyApi\Api\Order orders()
+ * @method \ShopifyApi\Api\Variants variant()
+ * @method \ShopifyApi\Api\Variants variants()
+ * @method \ShopifyApi\Api\Metafield metafield()
+ * @method \ShopifyApi\Api\Metafield metafields()
+ * @method \ShopifyApi\Api\Discount discount()
+ * @method \ShopifyApi\Api\Discount discounts()
+ * @method \ShopifyApi\Api\Webhook webhook()
+ * @method \ShopifyApi\Api\Webhook webhooks()
  */
 class Client
 {
@@ -104,6 +113,10 @@ class Client
             case 'discount':
             case 'discounts':
                 $api = new Discount($this);
+                break;
+            case 'webhook':
+            case 'webhooks':
+                $api = new Webhook($this);
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('Undefined api called: "%s"', $name));

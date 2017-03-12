@@ -112,7 +112,7 @@ class Order extends AbstractApi
      * @link https://help.shopify.com/api/reference/order#count
      *
      * @param array $params
-     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     * @return \Guzzle\Http\EntityBodyInterface|mixed|integer
      */
     public function count(array $params = [])
     {
