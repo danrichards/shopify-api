@@ -109,6 +109,19 @@ class Manager
     }
 
     /**
+     * Get an order by id or create a new one
+     *
+     * @param int $id the Webhook id
+     *
+     * @return Webhook
+     */
+    public function getWebhook($id = null)
+    {
+        return $this->fetchFromApiCache(Webhook::class, $id)
+            ?: new Webhook($this->client, $id);
+    }
+
+    /**
      * Get all the webhooks from a response as an array of Models or a
      * Collection of Models for Laravel.
      *
