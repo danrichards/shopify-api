@@ -231,7 +231,7 @@ abstract class AbstractModel
     {
         try {
             $this->preRemove();
-            $this->api->delete($this->id);
+            $this->api->remove($this->id);
             $this->postRemove();
         } catch (BadMethodCallException $e) {
             throw new BadMethodCallException(sprintf(
