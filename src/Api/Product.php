@@ -121,6 +121,19 @@ class Product extends AbstractApi
     }
 
     /**
+     * Delete a Product
+     *
+     * @link https://help.shopify.com/api/reference/product#update
+     *
+     * @param $id
+     * @return array
+     */
+    public function remove($id)
+    {
+        return $this->delete($this->getPath(rawurlencode($id)));
+    }
+
+    /**
      * Variants API
      *
      * @return Variants
