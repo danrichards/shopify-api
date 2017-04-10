@@ -5,6 +5,7 @@ namespace ShopifyApi\Models;
 use DateTime;
 use DateTimeZone;
 use ShopifyApi\Models\Traits\OwnsMetafields;
+use ShopifyApi\Models\Traits\Taggable;
 
 /**
  * Class Product
@@ -20,18 +21,18 @@ use ShopifyApi\Models\Traits\OwnsMetafields;
  * @method array getOptions()
  * @method array getImages()
  * @method array getImage()
- * @method string setTitle(string $title)
- * @method string setBodyHtml(string $body)
- * @method string setVendor(string $vendor)
- * @method string setProductType(string $product_type)
- * @method string setHandle(string $handle)
- * @method string setTemplateSuffix(string $template_suffix)
- * @method string setPublishedScope(string $published_scope)
- * @method array setVariants(array $variants)
- * @method array setOptions(array $options)
- * @method array setImages(array $images)
- * @method array setMetafields(array $metafields)
- * @method array setImage(array $image)
+ * @method $this setTitle(string $title)
+ * @method $this setBodyHtml(string $body)
+ * @method $this setVendor(string $vendor)
+ * @method $this setProductType(string $product_type)
+ * @method $this setHandle(string $handle)
+ * @method $this setTemplateSuffix(string $template_suffix)
+ * @method $this setPublishedScope(string $published_scope)
+ * @method $this setVariants(array $variants)
+ * @method $this setOptions(array $options)
+ * @method $this setImages(array $images)
+ * @method $this setMetafields(array $metafields)
+ * @method $this setImage(array $image)
  * @method bool hasTitle()
  * @method bool hasBodyHtml()
  * @method bool hasVendor()
@@ -47,35 +48,13 @@ use ShopifyApi\Models\Traits\OwnsMetafields;
 class Product extends AbstractModel
 {
 
-    use OwnsMetafields;
+    use OwnsMetafields, Taggable;
 
     /** @var string $api_name */
     protected static $api_name = 'product';
 
     /** @var array $load_params */
     protected static $load_params = [];
-
-    /**
-     * @return array
-     */
-    public function getTags()
-    {
-        return explode(',', $this->getOriginal('tags'));
-    }
-
-    /**
-     * @param array|string $tags
-     * @return $this
-     */
-    public function setTags($tags)
-    {
-        if (is_array($tags)) {
-            $this->setOriginal('tags', implode(',', $tags));
-        } elseif (is_string($tags)) {
-            $this->setOriginal('tags', $tags);
-        }
-        return $this;
-    }
 
     /**
      * @param DateTimeZone $time_zone

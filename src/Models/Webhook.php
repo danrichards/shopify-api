@@ -9,8 +9,8 @@ namespace ShopifyApi\Models;
  * @method string getAddress()
  * @method string getTopic()
  *
- * @method string setAddress(string $uri)
- * @method string setTopic(string $topic)
+ * @method $this setAddress(string $uri)
+ * @method $this setTopic(string $topic)
  *
  */
 class Webhook extends AbstractModel
