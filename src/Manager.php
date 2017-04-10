@@ -237,4 +237,22 @@ class Manager
         return defined('LARAVEL_START') ? collect($discounts) : $discounts;
     }
 
+    /**
+     * @return string
+     */
+    public function getShop()
+    {
+        $shop = $this->getClient()->getHttpClient()->getOption('base_url');
+        $shop = preg_replace('/https?\:\/\//', '', $shop);
+        return rtrim($shop, "/");
+    }
+
+    /**
+     * @return string
+     */
+    public function getShopName()
+    {
+        return str_replace(".myshopify.com", '', $this->getShop());
+    }
+
 }
