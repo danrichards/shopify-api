@@ -4,6 +4,7 @@ namespace ShopifyApi\Models;
 
 use DateTime;
 use DateTimeZone;
+use ShopifyApi\ClientTrait;
 use ShopifyApi\Util;
 use ShopifyApi\Client;
 use BadMethodCallException;
@@ -15,14 +16,13 @@ use ShopifyApi\Api\AbstractApi;
 abstract class AbstractModel
 {
 
+    use ClientTrait;
+
     /** @var string $api_name */
     protected static $api_name;
 
     /** @var array $load_params */
     protected static $load_params = [];
-
-    /** @var Client $client */
-    protected $client;
 
     /** @var AbstractApi $api */
     protected $api;
@@ -96,6 +96,14 @@ abstract class AbstractModel
         }
 
         throw new BadMethodCallException('Call to undefined method ' . get_class($this) . '::' . $method . '()');
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 
     /**

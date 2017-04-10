@@ -5,6 +5,7 @@ namespace ShopifyApi\Api;
 use ShopifyApi\Client;
 use BadMethodCallException;
 use InvalidArgumentException;
+use ShopifyApi\ClientTrait;
 use ShopifyApi\ResponseMediator;
 
 /**
@@ -13,14 +14,13 @@ use ShopifyApi\ResponseMediator;
 abstract class AbstractApi
 {
 
+    use ClientTrait;
+
     /** @var string $parameters_wrap */
     protected static $parameters_wrap = '';
 
     /** @var string $parameters_wrap_many */
     protected static $parameters_wrap_many = '';
-
-    /** @var Client */
-    protected $client;
 
     /** @var string $path The API path */
     protected static $path;
@@ -64,6 +64,14 @@ abstract class AbstractApi
             $method,
             get_called_class()
         ));
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 
     /**

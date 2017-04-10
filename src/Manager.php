@@ -18,8 +18,7 @@ use ShopifyApi\Models\Webhook;
 class Manager
 {
 
-    /** @var Client $client */
-    protected $client;
+    use ClientTrait;
 
     /** @var array $api_cache */
     protected $api_cache = [];
@@ -42,14 +41,6 @@ class Manager
     public function getInstance()
     {
         return $this;
-    }
-
-    /**
-     * @return Client
-     */
-    public function getClient()
-    {
-        return $this->client;
     }
 
     /**
@@ -235,24 +226,6 @@ class Manager
             ?: (new Discount($this->client))->all($params);
 
         return defined('LARAVEL_START') ? collect($discounts) : $discounts;
-    }
-
-    /**
-     * @return string
-     */
-    public function getShop()
-    {
-        $shop = $this->getClient()->getHttpClient()->getOption('base_url');
-        $shop = preg_replace('/https?\:\/\//', '', $shop);
-        return rtrim($shop, "/");
-    }
-
-    /**
-     * @return string
-     */
-    public function getShopName()
-    {
-        return str_replace(".myshopify.com", '', $this->getShop());
     }
 
 }
