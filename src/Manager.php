@@ -112,7 +112,6 @@ class Manager
      * Get an order by id or create a new one
      *
      * @param int $id the Webhook id
-     *
      * @return Webhook
      */
     public function getWebhook($id = null)
@@ -198,9 +197,7 @@ class Manager
     /**
      * @param string $method method name
      * @param array  $args arguments
-     *
      * @return mixed
-     *
      * @throws BadMethodCallException
      */
     public function __call($method, $args)
