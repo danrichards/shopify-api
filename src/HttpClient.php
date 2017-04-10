@@ -3,6 +3,7 @@
 namespace ShopifyApi;
 
 use ErrorException;
+use InvalidArgumentException;
 use RuntimeException;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\Request;
@@ -42,6 +43,32 @@ class HttpClient
         $this->options = array_merge($this->options, $options);
         $client = $client ?: new GuzzleClient($this->options['base_url'], $this->options);
         $this->client  = $client;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * Get option by name
+     *
+     * @param string $name the option's name
+     *
+     * @return mixed
+     *
+     * @throws InvalidArgumentException
+     */
+    public function getOption($name)
+    {
+        if (! array_key_exists($name, $this->options)) {
+            throw new InvalidArgumentException(sprintf('Undefined option called: "%s"', $name));
+        }
+
+        return $this->options[$name];
     }
 
     /**

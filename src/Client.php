@@ -179,6 +179,14 @@ class Client
     }
 
     /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
      * Get option by name
      *
      * @param string $name the option's name
