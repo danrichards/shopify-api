@@ -32,10 +32,14 @@ trait OwnsMetafields
         return [];
     }
 
+    /**
+     * @return array
+     */
     public function getMetafields()
     {
         return $this->metafields();
     }
+
     /**
      * @param string $key
      * @param string|null $namespace

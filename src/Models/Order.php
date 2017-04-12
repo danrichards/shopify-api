@@ -243,4 +243,57 @@ class Order extends AbstractModel
         return $this;
     }
 
+    // ------------------------------------------------------------------------
+    //                          SUPPORT FOR ORDER RISKS
+    // ------------------------------------------------------------------------
+
+    /**
+     * Retrieve all risks for an order
+     *
+     * @link https://help.shopify.com/api/reference/order_risks#index
+     *
+     * @param array $params
+     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     */
+    public function risks(array $params = [])
+    {
+        return $this->api->risks($this->getId(), $params);
+    }
+
+    /**
+     * @param $id
+     * @param array $params
+     */
+    public function createRisk(array $params = [])
+    {
+        return $this->api->createRisk($this->getId(), $params);
+    }
+
+    /**
+     * @param $risk_id
+     * @param array $params
+     */
+    public function updateRisk($risk_id, array $params = [])
+    {
+        return $this->api->updateRisk($this->getId(), $risk_id, $params);
+    }
+
+    /**
+     * @param $risk_id
+     * @param array $params
+     */
+    public function showRisk($risk_id, array $params = [])
+    {
+        return $this->api->showRisk($this->getId(), $risk_id, $params);
+    }
+
+    /**
+     * @param $risk_id
+     * @param array $params
+     */
+    public function deleteRisk($risk_id)
+    {
+        return $this->api->deleteRisk($this->getId(), $risk_id);
+    }
+
 }

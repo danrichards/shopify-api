@@ -166,4 +166,65 @@ class Order extends AbstractApi
         return $this->put($this->getPath(rawurlencode($id)), $params);
     }
 
+    // ------------------------------------------------------------------------
+    //                          SUPPORT FOR ORDER RISKS
+    // ------------------------------------------------------------------------
+
+    /**
+     * Retrieve all risks for an order
+     *
+     * @link https://help.shopify.com/api/reference/order_risks#index
+     *
+     * @param array $params
+     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     */
+    public function risks($id, array $params = [])
+    {
+        $alt_path = '/admin/orders/#id#/risks.json';
+        return $this->get($this->getPath($id, $alt_path), $params);
+    }
+
+    /**
+     * @param $id
+     * @param array $params
+     */
+    public function createRisk($id, array $params = [])
+    {
+        $alt_path = '/admin/orders/#id#/risks.json';
+        $risk = $params;
+        return $this->post($this->getPath($id, $alt_path), compact('risk'));
+    }
+
+    /**
+     * @param $id
+     * @param $risk_id
+     * @param array $params
+     */
+    public function updateRisk($id, $risk_id, array $params = [])
+    {
+        $alt_path = "/admin/orders/#id#/risks/{$risk_id}.json";
+        $risk = $params;
+        return $this->post($this->getPath($id, $alt_path), compact('risk'));
+    }
+
+    /**
+     * @param $id
+     * @param $risk_id
+     * @param array $params
+     */
+    public function showRisk($id, $risk_id, array $params = [])
+    {
+        $alt_path = "/admin/orders/#id#/risks/{$risk_id}.json";
+        return $this->get($this->getPath($id, $alt_path), $params);
+    }
+
+    /**
+     * @param $id
+     * @param $risk_id
+     */
+    public function deleteRisk($id, $risk_id)
+    {
+        $alt_path = "/admin/orders/#id#/risks/{$risk_id}.json";
+        return $this->delete($this->getPath($id, $alt_path));
+    }
 }
