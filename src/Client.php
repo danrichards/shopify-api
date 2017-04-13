@@ -12,6 +12,7 @@ use InvalidArgumentException;
 use ShopifyApi\Api\AbstractApi;
 use Guzzle\Http\Client as GuzzleClient;
 use ShopifyApi\Api\Webhook;
+use ShopifyApi\Models\OrderRisk;
 
 /**
  * Simple PHP Shopify client

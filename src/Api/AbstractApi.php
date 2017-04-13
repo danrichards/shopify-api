@@ -292,10 +292,12 @@ abstract class AbstractApi
      * @param null $id
      * @return mixed|string
      */
-    protected function getPath($id = null)
+    protected function getPath($id = null, $path = null)
     {
+        $path = $path ?: static::$path;
+
         if ($id) {
-            return preg_replace('/\#id\#/', rawurlencode($id), static::$path);
+            return preg_replace('/\#id\#/', rawurlencode($id), $path);
         }
 
         return static::$path;
