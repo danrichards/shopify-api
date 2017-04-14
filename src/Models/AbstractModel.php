@@ -67,8 +67,6 @@ abstract class AbstractModel
     }
 
     /**
-     * Because __get() was being a dick.
-     *
      * @param $method
      * @param $arguments
      * @return mixed
@@ -81,17 +79,42 @@ abstract class AbstractModel
             $action = array_shift($chunks);
             $key = implode('_', $chunks);
 
-            switch ($action) {
-                case 'get':
-                    return $this->data[$key];
-                    break;
-                case 'set':
-                    $this->data[$key] = $arguments[0];
-                    return $this;
-                    break;
-                case 'has':
-                    return array_key_exists($key, $this->data);
-                    break;
+            $strict = false;
+
+            if (defined('SHOPIFY_API_MODE')) {
+                if (SHOPIFY_API_MODE == 'strict') {
+                    $strict = true;
+                }
+            }
+
+            if ($strict) {
+                switch ($action) {
+                    case 'get':
+                        return $this->data[$key];
+                        break;
+                    case 'set':
+                        $this->data[$key] = $arguments[0];
+                        return $this;
+                        break;
+                    case 'has':
+                        return array_key_exists($key, $this->data);
+                        break;
+                }
+            } else {
+                switch ($action) {
+                    case 'get':
+                        return array_key_exists($key, $this->data)
+                            ? $this->data[$key] : null;
+                        break;
+                    case 'set':
+                        $this->data[$key] = isset($arguments[0])
+                            ? $arguments[0] : null;
+                        return $this;
+                        break;
+                    case 'has':
+                        return array_key_exists($key, $this->data);
+                        break;
+                }
             }
         }
 

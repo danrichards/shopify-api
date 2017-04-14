@@ -24,7 +24,6 @@ trait ClientTrait
      */
     public function getShop()
     {
-        return 'ok';
         $shop = $this->getClient()->getHttpClient()->getOption('base_url');
         $shop = preg_replace('/https?\:\/\//', '', $shop);
         return rtrim($shop, "/");
