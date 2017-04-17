@@ -152,6 +152,23 @@ class Variants extends AbstractApi
     }
 
     /**
+     * Delete a Product Variant
+     *
+     * @link https://help.shopify.com/api/reference/product_variant#delete
+     *
+     * @param $product_id
+     * @param $id
+     * @param array $params
+     * @return array
+     */
+    public function remove($product_id, $id, array $params = [])
+    {
+        $path = $this->getPath(rawurlencode($id));
+        $path = str_replace('admin/', "admin/products/{$product_id}", $path);
+        return $this->delete($this->getPath(rawurlencode($id)), $params);
+    }
+
+    /**
      * Create a Product Variant
      *
      * @link https://help.shopify.com/api/reference/product_variant#create

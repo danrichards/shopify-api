@@ -166,6 +166,16 @@ class Order extends AbstractApi
         return $this->put($this->getPath(rawurlencode($id)), $params);
     }
 
+    /**
+     * @param $id
+     * @param array $params
+     * @return array
+     */
+    public function remove($id, array $params = [])
+    {
+        return $this->delete($this->getPath(rawurlencode($id)), $params);
+    }
+
     // ------------------------------------------------------------------------
     //                          SUPPORT FOR ORDER RISKS
     // ------------------------------------------------------------------------

@@ -250,7 +250,7 @@ class Order extends AbstractModel
      */
     public function getCancelledAt()
     {
-        return is_null($date = $this->getOriginal('closed_at'))
+        return is_null($date = $this->getOriginal('cancelled_at'))
             ? $date : new DateTime($date);
     }
 
@@ -260,7 +260,7 @@ class Order extends AbstractModel
      */
     public function setCancelledAt($stringOrDateTime)
     {
-        $this->data['closed_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
+        $this->data['cancelled_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
             ? $stringOrDateTime->format('c') : $stringOrDateTime;
 
         return $this;
@@ -271,7 +271,7 @@ class Order extends AbstractModel
      */
     public function getProcessedAt()
     {
-        return is_null($date = $this->getOriginal('closed_at'))
+        return is_null($date = $this->getOriginal('processed_at'))
             ? $date : new DateTime($date);
     }
 
@@ -281,7 +281,7 @@ class Order extends AbstractModel
      */
     public function setProcessedAt($stringOrDateTime)
     {
-        $this->data['closed_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
+        $this->data['processed_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
             ? $stringOrDateTime->format('c') : $stringOrDateTime;
 
         return $this;
