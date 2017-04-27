@@ -4,6 +4,7 @@ namespace ShopifyApi\Models;
 
 use DateTime;
 use DateTimeZone;
+use JsonSerializable;
 use ShopifyApi\ClientTrait;
 use ShopifyApi\Util;
 use ShopifyApi\Client;
@@ -13,7 +14,7 @@ use ShopifyApi\Api\AbstractApi;
 /**
  * Class AbstractModel
  */
-abstract class AbstractModel
+abstract class AbstractModel implements JsonSerializable
 {
 
     use ClientTrait;
@@ -393,6 +394,14 @@ abstract class AbstractModel
      */
     protected function postRemove()
     {
+    }
+
+    /**
+     * @return string
+     */
+    public function jsonSerialize ()
+    {
+        return json_encode($this->getData());
     }
 
 }
