@@ -288,7 +288,7 @@ class Order extends AbstractModel
     }
 
     // ------------------------------------------------------------------------
-    //                          SUPPORT FOR ORDER RISKS
+    //                         SUPPORT FOR ORDER RISKS
     // ------------------------------------------------------------------------
 
     /**
@@ -297,47 +297,213 @@ class Order extends AbstractModel
      * @link https://help.shopify.com/api/reference/order_risks#index
      *
      * @param array $params
-     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     * @return array
      */
     public function risks(array $params = [])
     {
-        return $this->api->risks($this->getId(), $params);
+        $response = $this->api->risks($this->getId(), $params);
+        return isset($response['risks']) ? $response['risks'] : $response;
     }
 
     /**
-     * @param $id
      * @param array $params
+     * @return array
      */
     public function createRisk(array $params = [])
     {
-        return $this->api->createRisk($this->getId(), $params);
+        $response = $this->api->createRisk($this->getId(), $params);
+        return isset($response['risk']) ? $response['risk'] : $response;
     }
 
     /**
      * @param $risk_id
      * @param array $params
+     * @return array
      */
     public function updateRisk($risk_id, array $params = [])
     {
-        return $this->api->updateRisk($this->getId(), $risk_id, $params);
+        $response = $this->api->updateRisk($this->getId(), $risk_id, $params);
+        return isset($response['risk']) ? $response['risk'] : $response;
     }
 
     /**
      * @param $risk_id
-     * @param array $params
+     * @return array
      */
-    public function showRisk($risk_id, array $params = [])
+    public function showRisk($risk_id)
     {
-        return $this->api->showRisk($this->getId(), $risk_id, $params);
+        $response = $this->api->showRisk($this->getId(), $risk_id);
+        return isset($response['risk']) ? $response['risk'] : $response;
     }
 
     /**
      * @param $risk_id
-     * @param array $params
+     * @return array
      */
     public function deleteRisk($risk_id)
     {
         return $this->api->deleteRisk($this->getId(), $risk_id);
+    }
+
+    // ------------------------------------------------------------------------
+    //                      SUPPORT FOR ORDER FULFILLMENTS
+    // ------------------------------------------------------------------------
+
+    /**
+     * Retrieve all risks for an order
+     *
+     * @link https://help.shopify.com/api/reference/order_risks#index
+     *
+     * @param array $params
+     * @return array
+     */
+    public function fulfillments(array $params = [])
+    {
+        $response = $this->api->fulfillments($this->getId(), $params);
+        return isset($response['fulfillments'])
+            ? $response['fulfillments']
+            : $response;
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    public function createFulfillment(array $params = [])
+    {
+        $response = $this->api->createFulfillment($this->getId(), $params);
+        return isset($response['fulfillment'])
+            ? $response['fulfillment']
+            : $response;
+    }
+
+    /**
+     * @param $fulfillment_id
+     * @param array $params
+     * @return array
+     */
+    public function updateFulfillment($fulfillment_id, array $params = [])
+    {
+        $response = $this->api->updateFulfillment($this->getId(), $fulfillment_id, $params);
+        return isset($response['fulfillment'])
+            ? $response['fulfillment']
+            : $response;
+    }
+
+    /**
+     * @param $fulfillment_id
+     * @param array $params
+     * @return array
+     */
+    public function showFulfillment($fulfillment_id, array $params = [])
+    {
+        $response = $this->api->showFulfillment($this->getId(), $fulfillment_id, $params);
+        return isset($response['fulfillment'])
+            ? $response['fulfillment']
+            : $response;
+    }
+
+    /**
+     * @param array $params
+     * @return integer
+     */
+    public function countFulfillments(array $params = [])
+    {
+        $response = $this->api->countFulfillments($this->getId(), $params);
+        return isset($response['count'])
+            ? $response['count']
+            : $response;
+    }
+
+    /**
+     * @param $fulfillment_id
+     * @return array
+     */
+    public function openFulfillment($fulfillment_id)
+    {
+        $response = $this->api->openFulfillment($this->getId(), $fulfillment_id);
+        return isset($response['fulfillment'])
+            ? $response['fulfillment']
+            : $response;
+    }
+
+    /**
+     * @param $fulfillment_id
+     * @return array
+     */
+    public function completeFulfillment($fulfillment_id)
+    {
+        $response = $this->api->completeFulfillment($this->getId(), $fulfillment_id);
+        return isset($response['fulfillment'])
+            ? $response['fulfillment']
+            : $response;
+    }
+
+    /**
+     * @param $fulfillment_id
+     * @return array
+     */
+    public function cancelFulfillment($fulfillment_id)
+    {
+        $response = $this->api->cancelFulfillment($this->getId(), $fulfillment_id);
+        return isset($response['fulfillment'])
+            ? $response['fulfillment']
+            : $response;
+    }
+
+    // ------------------------------------------------------------------------
+    //                   SUPPORT FOR ORDER FULFILLMENT EVENTS
+    // ------------------------------------------------------------------------
+
+    /**
+     * Retrieve all risks for an order
+     *
+     * @link https://help.shopify.com/api/reference/order_risks#index
+     *
+     * @param $fulfillment_id
+     * @param array $params
+     * @return array
+     */
+    public function fulfillmentEvents($fulfillment_id, array $params = [])
+    {
+        $response = $this->api->fulfillmentEvents($this->getId(), $fulfillment_id, $params);
+        return isset($response['fulfillment_events']) ? $response['fulfillment_events'] : $response;
+    }
+
+    /**
+     * @param $fulfillment_id
+     * @param array $params
+     * @return array
+     */
+    public function createFulfillmentEvent($fulfillment_id, array $params = [])
+    {
+        $response = $this->api->createFulfillment($this->getId(), $fulfillment_id, $params);
+        return isset($response['fulfillment_event'])
+            ? $response['fulfillment_event']
+            : $response;
+    }
+
+    /**
+     * @param $fulfillment_id
+     * @param $event_id
+     * @return array
+     */
+    public function showFulfillmentEvent($fulfillment_id, $event_id)
+    {
+        $response = $this->api->showFulfillmentEvent($this->getId(), $fulfillment_id, $event_id);
+        return isset($response['fulfillment_event'])
+            ? $response['fulfillment_event']
+            : $response;
+    }
+
+    /**
+     * @param $fulfillment_id
+     * @param $event_id
+     * @return array
+     */
+    public function deleteFulfillmentEvent($fulfillment_id, $event_id)
+    {
+        return $this->api->deleteFulfillmentEvent($this->getId(), $fulfillment_id, $event_id);
     }
 
 }

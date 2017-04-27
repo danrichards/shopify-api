@@ -185,8 +185,9 @@ class Order extends AbstractApi
      *
      * @link https://help.shopify.com/api/reference/order_risks#index
      *
+     * @param $id
      * @param array $params
-     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     * @return array
      */
     public function risks($id, array $params = [])
     {
@@ -197,6 +198,7 @@ class Order extends AbstractApi
     /**
      * @param $id
      * @param array $params
+     * @return array
      */
     public function createRisk($id, array $params = [])
     {
@@ -209,6 +211,7 @@ class Order extends AbstractApi
      * @param $id
      * @param $risk_id
      * @param array $params
+     * @return array
      */
     public function updateRisk($id, $risk_id, array $params = [])
     {
@@ -220,21 +223,199 @@ class Order extends AbstractApi
     /**
      * @param $id
      * @param $risk_id
-     * @param array $params
+     * @return array
      */
-    public function showRisk($id, $risk_id, array $params = [])
+    public function showRisk($id, $risk_id)
     {
         $alt_path = "/admin/orders/#id#/risks/{$risk_id}.json";
-        return $this->get($this->getPath($id, $alt_path), $params);
+        return $this->get($this->getPath($id, $alt_path));
     }
 
     /**
      * @param $id
      * @param $risk_id
+     * @return array
      */
     public function deleteRisk($id, $risk_id)
     {
         $alt_path = "/admin/orders/#id#/risks/{$risk_id}.json";
         return $this->delete($this->getPath($id, $alt_path));
     }
+
+    // ------------------------------------------------------------------------
+    //                       SUPPORT FOR ORDER FULFILLMENTS
+    // ------------------------------------------------------------------------
+
+    /**
+     * Retrieve all fulfillments for an order
+     *
+     * @link https://help.shopify.com/api/reference/fulfillment#index
+     *
+     * @param $id
+     * @param array $params
+     * @return array
+     */
+    public function fulfillments($id, array $params = [])
+    {
+        $alt_path = '/admin/orders/#id#/fulfillments.json';
+        return $this->get($this->getPath($id, $alt_path), $params);
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillment#create
+     *
+     * @param $id
+     * @param array $params
+     * @return array
+     */
+    public function createFulfillment($id, array $params = [])
+    {
+        $alt_path = '/admin/orders/#id#/fulfillments.json';
+        $fulfillment = $params;
+        return $this->post($this->getPath($id, $alt_path), compact('fulfillment'));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillment#update
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @param array $params
+     * @return array
+     */
+    public function updateFulfillment($id, $fulfillment_id, array $params = [])
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}.json";
+        $fulfillment = $params;
+        return $this->post($this->getPath($id, $alt_path), compact('fulfillment'));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillment#show
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @return array
+     */
+    public function showFulfillment($id, $fulfillment_id)
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}.json";
+        return $this->get($this->getPath($id, $alt_path));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillment#count
+     *
+     * @param $id
+     * @param array $params
+     * @return array
+     */
+    public function countFulfillments($id, array $params = [])
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/count.json";
+        return $this->get($this->getPath($id, $alt_path), $params);
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillment#open
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @return array
+     */
+    public function openFulfillment($id, $fulfillment_id)
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/open.json";
+        return $this->post($this->getPath($id, $alt_path));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillment#complete
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @return array
+     */
+    public function completeFulfillment($id, $fulfillment_id)
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/complete.json";
+        return $this->post($this->getPath($id, $alt_path));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillment#cancel
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @return array
+     */
+    public function cancelFulfillment($id, $fulfillment_id)
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/cancel.json";
+        return $this->post($this->getPath($id, $alt_path));
+    }
+
+    // ------------------------------------------------------------------------
+    //                   SUPPORT FOR ORDER FULFILLMENT EVENTS
+    // ------------------------------------------------------------------------
+
+    /**
+     * Retrieve all fulfillment events for an order
+     *
+     * @link https://help.shopify.com/api/reference/fulfillmentevent#index
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @param array $params
+     * @return array
+     */
+    public function fulfillmentEvents($id, $fulfillment_id, array $params = [])
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/events.json";
+        return $this->get($this->getPath($id, $alt_path), $params);
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillmentevent#create
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @param array $params
+     * @return array
+     */
+    public function createFulfillmentEvent($id, $fulfillment_id, array $params = [])
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/events.json";
+        $event = $params;
+        return $this->post($this->getPath($id, $alt_path), compact('event'));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillmentevent#show
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @param $event_id
+     * @return array
+     */
+    public function showFulfillmentEvent($id, $fulfillment_id, $event_id)
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/events/{$event_id}.json";
+        return $this->get($this->getPath($id, $alt_path));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/fulfillmentevent#destroy
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @param $event_id
+     * @return array
+     */
+    public function deleteFulfillmentEvent($id, $fulfillment_id, $event_id)
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/events/{$event_id}.json";
+        return $this->delete($this->getPath($id, $alt_path));
+    }
+
 }
