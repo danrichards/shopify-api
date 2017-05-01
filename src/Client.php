@@ -2,17 +2,17 @@
 
 namespace ShopifyApi;
 
+use BadMethodCallException;
+use Guzzle\Http\Client as GuzzleClient;
+use InvalidArgumentException;
+use ShopifyApi\Api\AbstractApi;
 use ShopifyApi\Api\Discount;
 use ShopifyApi\Api\Metafield;
 use ShopifyApi\Api\Order;
 use ShopifyApi\Api\Product;
+use ShopifyApi\Api\Shop;
 use ShopifyApi\Api\Variants;
-use BadMethodCallException;
-use InvalidArgumentException;
-use ShopifyApi\Api\AbstractApi;
-use Guzzle\Http\Client as GuzzleClient;
 use ShopifyApi\Api\Webhook;
-use ShopifyApi\Models\OrderRisk;
 
 /**
  * Simple PHP Shopify client
@@ -95,25 +95,28 @@ class Client
     public function api($name)
     {
         switch ($name) {
-            case 'product':
-            case 'products':
-                $api = new Product($this);
-                break;
-            case 'order':
-            case 'orders':
-                $api = new Order($this);
-                break;
-            case 'variant':
-            case 'variants':
-                $api = new Variants($this);
+            case 'discount':
+            case 'discounts':
+                $api = new Discount($this);
                 break;
             case 'metafield':
             case 'metafields':
                 $api = new Metafield($this);
                 break;
-            case 'discount':
-            case 'discounts':
-                $api = new Discount($this);
+            case 'order':
+            case 'orders':
+                $api = new Order($this);
+                break;
+            case 'product':
+            case 'products':
+                $api = new Product($this);
+                break;
+            case 'shop':
+                $api = new Shop($this);
+                break;
+            case 'variant':
+            case 'variants':
+                $api = new Variants($this);
                 break;
             case 'webhook':
             case 'webhooks':

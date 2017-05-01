@@ -7,6 +7,7 @@ use ShopifyApi\Models\Discount;
 use ShopifyApi\Models\Metafield;
 use ShopifyApi\Models\Order;
 use ShopifyApi\Models\Product;
+use ShopifyApi\Models\Shop;
 use ShopifyApi\Models\Variant;
 use ShopifyApi\Models\Webhook;
 
@@ -41,6 +42,19 @@ class Manager
     public function getInstance()
     {
         return $this;
+    }
+
+    /**
+     * Get a product by id or create a new one
+     *
+     * @param int $id the Product id
+     *
+     * @return Product
+     */
+    public function getShop()
+    {
+        return $this->fetchFromApiCache(Shop::class)
+            ?: new Shop($this->client);
     }
 
     /**
@@ -176,7 +190,7 @@ class Manager
      * @param $params
      * @return mixed
      */
-    public function fetchFromApiCache($model, $params)
+    public function fetchFromApiCache($model, $params = null)
     {
         if (isset($this->api_cache[$model])) {
             return $this->api_cache[$model]($this->getClient(), $params);
