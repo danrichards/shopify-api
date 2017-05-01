@@ -47,9 +47,7 @@ class Manager
     /**
      * Get a product by id or create a new one
      *
-     * @param int $id the Product id
-     *
-     * @return Product
+     * @return Shop
      */
     public function getShop()
     {
