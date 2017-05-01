@@ -99,7 +99,7 @@ class Order extends AbstractApi
      * @link https://help.shopify.com/api/reference/order#index
      *
      * @param array $params
-     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     * @return array
      */
     public function all(array $params = [])
     {
@@ -112,7 +112,7 @@ class Order extends AbstractApi
      * @link https://help.shopify.com/api/reference/order#count
      *
      * @param array $params
-     * @return \Guzzle\Http\EntityBodyInterface|mixed|integer
+     * @return array
      */
     public function count(array $params = [])
     {
@@ -128,8 +128,7 @@ class Order extends AbstractApi
      *
      * @param string $id     the board's id
      * @param array  $params optional attributes
-     *
-     * @return array board info
+     * @return array
      */
     public function show($id, array $params = [])
     {
@@ -142,7 +141,6 @@ class Order extends AbstractApi
      * @link https://help.shopify.com/api/reference/order#create
      *
      * @param array  $params Attributes
-     *
      * @return array
      */
     public function create(array $params = array())

@@ -53,7 +53,7 @@ class Product extends AbstractApi
      * @link https://help.shopify.com/api/reference/product#index
      *
      * @param array $params
-     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     * @return array
      */
     public function all(array $params = [])
     {
@@ -66,7 +66,7 @@ class Product extends AbstractApi
      * @link https://help.shopify.com/api/reference/product#count
      *
      * @param array $params
-     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     * @return integer
      */
     public function count(array $params = [])
     {
@@ -82,8 +82,7 @@ class Product extends AbstractApi
      *
      * @param string $id     the board's id
      * @param array  $params optional attributes
-     *
-     * @return array board info
+     * @return array
      */
     public function show($id, array $params = [])
     {
@@ -96,7 +95,6 @@ class Product extends AbstractApi
      * @link https://help.shopify.com/api/reference/product#create
      *
      * @param array  $params Attributes
-     *
      * @return array
      */
     public function create(array $params = array())
@@ -136,7 +134,7 @@ class Product extends AbstractApi
     /**
      * Variants API
      *
-     * @return Variants
+     * @return array [Variant]
      */
     public function variants()
     {
