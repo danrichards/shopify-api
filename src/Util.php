@@ -38,8 +38,9 @@ class Util
     }
 
     /**
-     * @param $token
-     * @param $data
+     * @param string $hmac
+     * @param string $token
+     * @param string $data
      * @return bool
      */
     public static function validWebhookHmac($hmac, $token, $data)
@@ -56,10 +57,8 @@ class Util
 
     /**
      * @param $hmac
-     * @param $code
-     * @param $shop
-     * @param $state
-     * @param $timestamp
+     * @param $secret
+     * @param array $data
      * @return bool
      */
     public static function validAppHmac($hmac, $secret, array $data)

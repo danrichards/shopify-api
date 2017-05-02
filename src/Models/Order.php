@@ -225,6 +225,36 @@ class Order extends AbstractModel
     protected static $load_params = [];
 
     /**
+     * @return float
+     */
+    public function getTotalShipping()
+    {
+        $shipping_lines = $this->getShippingLines();
+
+        return floatval(array_reduce(
+            $shipping_lines,
+            function($total, $line) {
+                return $total
+                    + (isset($line['price']) ? $line['price'] : 0)
+                    + array_reduce($line['tax_lines'],
+                        function($tax_total, $tax_line) {
+                            return $tax_total
+                                + (isset($tax_line['price']) ? $tax_line['price'] : 0);
+                        },
+                        0);
+            },
+            0));
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalLineItems()
+    {
+        return count($this->getLineItems());
+    }
+
+    /**
      * @return DateTime|null
      */
     public function getClosedAt()

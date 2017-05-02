@@ -300,7 +300,7 @@ class Manager
      * @param string $client_secret
      * @param $shop
      * @param $code
-     * @return stdClass
+     * @return \stdClass
      */
     public function getAppInstallResponse($client_id, $client_secret, $shop, $code)
     {

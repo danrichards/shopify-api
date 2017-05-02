@@ -88,9 +88,9 @@ Shopify::getAllOrders();                    // returns a Collection of ShopifyAp
 
 Shopify::getMetafield($metafield_id = 123); // returns ShopifyApi/Models/Metafield
 
-Shopify::getDiscount($dicount_id = 123);     // returns ShopifyApi/Models/Discount
+Shopify::getDiscount($dicount_id = 123);    // returns ShopifyApi/Models/Discount
 
-Shopify::getAllDiscounts();                  // returns Collection of ShopifyApi/Models/Discount
+Shopify::getAllDiscounts();                 // returns Collection of ShopifyApi/Models/Discount
 
 Shopify::getAllWebhooks();                  // returns Collection of ShopifyApi/Models/Webhook
 
@@ -114,13 +114,13 @@ Shopify::api('orders')->count();                             // returns int
 
 Shopify::api('discounts')->show($discount_id = 123);         // returns array
 
-Shopify::api('discounts')->all();                             // returns array
+Shopify::api('discounts')->all();                            // returns array
 
-Shopify::api('webhooks')->show($webhook_id = 123);            // returns array
+Shopify::api('webhooks')->show($webhook_id = 123);           // returns array
 
-Shopify::api('webhooks')->all();                               // returns array
+Shopify::api('webhooks')->all();                             // returns array
 
-Shopify::api('webhooks')->count();                             // returns int
+Shopify::api('webhooks')->count();                           // returns int
 ```
 
 #### Examples of saving data.
@@ -160,6 +160,40 @@ $product->createMetafield('board_specs', 'criteria', ['value' => new MyJsonSeria
 ```
 
 Methods called on `Manager` will cascade down onto `Client` via the `__call` method.
+
+## Embedded Apps
+
+#### Get a token for a redirect response.
+
+```
+Shopify::getAppInstallResponse(
+    'your_app_client_id', 
+    'your_app_client_secret',
+    'shop_from_request',
+    'code_from_request'
+);
+
+// returns (object) ['access_token' => '...', 'scopes' => '...']
+```
+
+#### Verify App Hmac (works for callback or redirect)
+
+```
+ShopifyApi\Util::validAppHmac(
+    'hmac_from_request', 
+    'your_app_client_secret', 
+    ['shop' => '...', 'timestamp' => '...', ...])
+```
+
+#### Verify App Webhook Hmac
+
+```
+ShopifyApi\Util::validWebhookHmac(
+    'hmac_from_request', 
+    'your_app_client_secret', 
+    file_get_contents('php://input')
+)
+```
 
 ## Caching
 
@@ -225,7 +259,7 @@ This repository's structure was modeled after the robust [`cdaguerre/php-trello-
 
 ## Todo
 
-* Migrate from `"guzzle/guzzle"` to `guzzlehttp`, bump version.
+* Migrate from `guzzle/guzzle` to `guzzlehttp/guzzle`, bump version.
 * Model support for deletion. A `remove()` method.
 
 ## License
