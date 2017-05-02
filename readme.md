@@ -17,29 +17,7 @@ An object-oriented approach towards using the Shopify API. It is currently a wor
 
 ```
 // Assumes setup of client with access token.
-$config = [
-    'base_url' => "https://" . env('SHOPIFY_DOMAIN') . "/",
-    'request.options' => [
-        'headers' => [
-            'X-Shopify-Access-Token' => env('SHOPIFY_TOKEN'),
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json; charset=utf-8;'
-        ]
-    ]
-];
-
-// Guzzle does our REST and is immutable
-$guzzle_http_client = new GuzzleClient($config['base_url'], $config);
-
-// ShopifyHttpClient decorates GuzzleClient
-$shopify_http_client = new ShopifyHttpClient($config, $guzzle_http_client);
-
-// ShopifyClient decorates our ShopifyHttpClient. We may swap in a
-// different client (ie. different shop) later, if need be.
-$shopify_client = new ShopifyClient($shopify_http_client);
-
-// Manager provide some conveniences and is available to bound to a container.
-$mgr = new Manager($shopify_client);
+$mgr = ShopifyApi\Manager::init($shop, $token);
 
 $mgr->getProduct($product_id = 123);              // returns ShopifyApi/Models/Product
 
@@ -61,6 +39,13 @@ In your `config/app.php`
 ### Add the following to your `aliases` array:
 
     'Shopify' => ShopifyApi\Support\ShopifyFacade::class,
+    
+### Replace following variables in your `.env`
+    
+```
+SHOPIFY_DOMAIN=your-shop-name.myshopify.com
+SHOPIFY_TOKEN=your-token-here
+```
     
 ### Using the Facade gives you `Manager`
 
