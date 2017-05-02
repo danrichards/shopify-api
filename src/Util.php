@@ -37,4 +37,50 @@ class Util
         return mb_strtolower($value, 'UTF-8');
     }
 
+    /**
+     * @param $token
+     * @param $data
+     * @return bool
+     */
+    public static function validWebhookHmac($hmac, $token, $data)
+    {
+        $calculated_hmac = hash_hmac(
+            $algorithm = 'sha256',
+            $data,
+            $token,
+            $raw_output = true
+        );
+
+        return $hmac == base64_encode($calculated_hmac);
+    }
+
+    /**
+     * @param $hmac
+     * @param $code
+     * @param $shop
+     * @param $state
+     * @param $timestamp
+     * @return bool
+     */
+    public static function validAppHmac($hmac, $secret, array $data)
+    {
+        $accepts = ['code', 'protocol', 'shop', 'state', 'timestamp'];
+        $message = [];
+        foreach($accepts as $key) {
+            if (isset($data[$key])) {
+                $message[] = "{$key}={$data[$key]}";
+            }
+        }
+
+        $message = implode('&', $message);
+
+        $calculated_hmac = hash_hmac(
+            $alorithm = 'sha256', 
+            $message, 
+            $secret
+        );
+
+        return $hmac == $calculated_hmac;
+    }
+
 }

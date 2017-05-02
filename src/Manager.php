@@ -3,6 +3,7 @@
 namespace ShopifyApi;
 
 use BadMethodCallException;
+use Guzzle\Http\Client as GuzzleClient;
 use ShopifyApi\Models\Discount;
 use ShopifyApi\Models\Metafield;
 use ShopifyApi\Models\Order;
@@ -46,6 +47,8 @@ class Manager
 
     /**
      * Get a product by id or create a new one
+     *
+     * @param int $id the Product id
      *
      * @return Shop
      */
@@ -238,6 +241,93 @@ class Manager
             ?: (new Discount($this->client))->all($params);
 
         return defined('LARAVEL_START') ? collect($discounts) : $discounts;
+    }
+
+    /**
+     * @param $shop
+     * @param $token
+     * @return Manager
+     */
+    public function make($shop, $token)
+    {
+        return static::init($shop, $token);
+    }
+
+    /**
+     * @param $shop
+     * @param $token
+     * @return Manager
+     */
+    public static function init($shop, $token)
+    {
+        $base_url = preg_replace("/(https:\/\/|http:\/\/)/", "", $shop);
+        $base_url = rtrim($base_url, "/");
+        $base_url = str_replace('.myshopify.com', '', $base_url);
+        $base_url = "https://{$base_url}.myshopify.com";
+
+        // By default, let's setup our main shopify shop.
+        $config = [
+            'base_url' => $base_url,
+            'request.options' => [
+                'headers' => [
+                    'X-Shopify-Access-Token' => $token,
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json; charset=utf-8;'
+                ]
+            ]
+        ];
+
+        // Guzzle does our REST client and is immutable
+        $guzzle_http_client = new GuzzleClient($config['base_url'], $config);
+
+        // ShopifyHttpClient decorates GuzzleClient
+        $shopify_http_client = new HttpClient($config, $guzzle_http_client);
+
+        // ShopifyClient decorates our ShopifyHttpClient. We may swap in a
+        // different client (ie. different shop) later, if need be.
+        $shopify_client = new Client($shopify_http_client);
+
+        // Manager is a singleton we may pull down out of the IoC container
+        // with the active ShopifyClient we're working with. There is also
+        // a facade `Shopify` which provides the Manager.
+        return new static($shopify_client);
+    }
+
+    /**
+     * Retrieve a token for someone installing your Shopify App.
+     *
+     * @param string $client_id
+     * @param string $client_secret
+     * @param $shop
+     * @param $code
+     * @return stdClass
+     */
+    public function getAppInstallResponse($client_id, $client_secret, $shop, $code)
+    {
+        $base_url = "https://{$shop}/admin/oauth/access_token";
+
+        // By default, let's setup our main shopify shop.
+        $config = [
+            'base_url' => $base_url,
+            'request.options' => [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json; charset=utf-8;'
+                ]
+            ]
+        ];
+
+        // Guzzle does our REST client and is immutable
+        $guzzle_http_client = new GuzzleClient($config['base_url'], $config);
+
+        // ShopifyHttpClient decorates GuzzleClient
+        $shopify_http_client = new HttpClient($config, $guzzle_http_client);
+
+        $params = compact('client_id', 'client_secret', 'code');
+
+        $response = $shopify_http_client->post($base_url, $params);
+
+        return ResponseMediator::getContent($response);
     }
 
 }

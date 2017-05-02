@@ -225,7 +225,7 @@ class Client
 
         $this->options[$name] = $value;
     }
-
+    
     /**
      * Proxies $this->members() to $this->api('members')
      *
