@@ -11,7 +11,7 @@ An object-oriented approach towards using the Shopify API. It is currently a wor
 
 ## Composer
 
-    $ composer require dan/shopify-api dev-master
+    $ composer require dan/shopify-api v0.9.9.*
     
 ## Usage without Laravel
 
