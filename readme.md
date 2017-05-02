@@ -49,14 +49,7 @@ SHOPIFY_TOKEN=your-token-here
     
 ### Using the Facade gives you `Manager`
 
-#### These are all effectively the same thing
-
-* `$p = (new Manager($shopify_client))->getProduct(123); // see above for $shopify_client`
-* `$p = new \ShopifyApi\Models\Product($shopify_client, 123);`
-* `$p = new \ShopifyApi\Models\Product($shopify_client, Shopify::api('products')->show(123));`
-* `$p = Shopify::getProduct(123);`
-
-#### Examples of getting data.
+Methods called on `Manager` will cascade down onto `Client` via the `__call` method.
 
 ```
 Shopify::getProduct($product_id = 123);     // returns ShopifyApi/Models/Product
@@ -144,8 +137,6 @@ $product->updateOrCreateMetafield('in_stock', 'inventory', ['value' => 200]);
 $product->createMetafield('board_specs', 'criteria', ['value' => new MyJsonSerializbleObject()]);
 ```
 
-Methods called on `Manager` will cascade down onto `Client` via the `__call` method.
-
 ## Embedded Apps
 
 #### Get a token for a redirect response.
@@ -167,7 +158,8 @@ Shopify::getAppInstallResponse(
 ShopifyApi\Util::validAppHmac(
     'hmac_from_request', 
     'your_app_client_secret', 
-    ['shop' => '...', 'timestamp' => '...', ...])
+    ['shop' => '...', 'timestamp' => '...', ...]
+);
 ```
 
 #### Verify App Webhook Hmac
@@ -177,7 +169,7 @@ ShopifyApi\Util::validWebhookHmac(
     'hmac_from_request', 
     'your_app_client_secret', 
     file_get_contents('php://input')
-)
+);
 ```
 
 ## Caching
