@@ -1,12 +1,16 @@
 # Shopify API
 
-An object-oriented approach towards using the Shopify API. It is currently a work in progress and only supports:
+An object-oriented approach towards using the Shopify API. 
 
+## Supported Currently:
+
+* [Discount](https://help.shopify.com/api/reference/discount) - Shopify Plus
+* [Fulfillment](https://help.shopify.com/api/reference/order) - via Order
+* [Metafield](https://help.shopify.com/api/reference/metafield)
 * [Order](https://help.shopify.com/api/reference/order)
+* [OrderRisk](https://help.shopify.com/api/reference/order) - via Order
 * [Product](https://help.shopify.com/api/reference/product)
 * [Variant](https://help.shopify.com/api/reference/product_variant)
-* [Metafield](https://help.shopify.com/api/reference/metafield)
-* [Discount](https://help.shopify.com/api/reference/discount) - Shopify Plus
 * [Webhook](https://help.shopify.com/api/reference/webhook)
 
 ## Composer
