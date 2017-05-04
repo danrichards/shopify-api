@@ -63,12 +63,12 @@ class Util
      */
     public static function validAppHmac($hmac, $secret, array $data)
     {
-        $accepts = ['code', 'protocol', 'shop', 'state', 'timestamp'];
         $message = [];
-        foreach($accepts as $key) {
-            if (isset($data[$key])) {
-                $message[] = "{$key}={$data[$key]}";
-            }
+
+        $keys = array_keys($data);
+        sort($keys);
+        foreach($keys as $key) {
+            $message[] = "{$key}={$data[$key]}";
         }
 
         $message = implode('&', $message);
