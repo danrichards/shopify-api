@@ -80,6 +80,7 @@ class Webhook extends AbstractApi
     const PRODUCTS_UPDATE = 'products/update';
     const REFUNDS_CREATE = 'refunds/create';
     const SHOP_UPDATE = 'shop/update';
+    const APP_UNINSTALLED = 'app/uninstalled';
     const THEMES_CREATE = 'themes/create';
     const THEMES_DELETE = 'themes/delete';
     const THEMES_PUBLISH = 'themes/publish';
