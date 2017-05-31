@@ -144,4 +144,91 @@ class Product extends AbstractApi
         }, $variants);
     }
 
+    // ------------------------------------------------------------------------
+    //                      SUPPORT FOR PRODUCT IMAGES
+    // ------------------------------------------------------------------------
+
+    /**
+     * Retrieve all images for a product
+     *
+     * @link https://help.shopify.com/api/reference/product_image#index
+     *
+     * @param $id
+     * @param array $params
+     * @return array
+     */
+    public function images($id, array $params = [])
+    {
+        $alt_path = '/admin/products/#id#/images.json';
+        return $this->get($this->getPath($id, $alt_path), $params);
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#create
+     *
+     * @param $id
+     * @param array $params
+     * @return array
+     */
+    public function createImage($id, array $params = [])
+    {
+        $alt_path = '/admin/products/#id#/images.json';
+        $image = $params;
+        return $this->post($this->getPath($id, $alt_path), compact('image'));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#update
+     *
+     * @param $id
+     * @param $image_id
+     * @param array $params
+     * @return array
+     */
+    public function updateImage($id, $image_id, array $params = [])
+    {
+        $alt_path = "/admin/orders/#id#/fulfillments/{$image_id}.json";
+        $image = $params;
+        return $this->post($this->getPath($id, $alt_path), compact('image'));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#show
+     *
+     * @param $id
+     * @param $image_id
+     * @return array
+     */
+    public function showImage($id, $image_id)
+    {
+        $alt_path = "/admin/products/#id#/images/{$image_id}.json";
+        return $this->get($this->getPath($id, $alt_path));
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#count
+     *
+     * @param $id
+     * @param array $params
+     * @return array
+     */
+    public function countImages($id, array $params = [])
+    {
+        $alt_path = "/admin/products/#id#/images/count.json";
+        return $this->get($this->getPath($id, $alt_path), $params);
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#destroy
+     *
+     * @param $id
+     * @param $fulfillment_id
+     * @return array
+     */
+    public function deleteImage($id, $image_id)
+    {
+        $alt_path = "/admin/products/#id#/images/{$image_id}.json";
+        return $this->delete($this->getPath($id, $alt_path));
+    }
+
 }

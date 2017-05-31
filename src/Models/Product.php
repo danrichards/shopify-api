@@ -129,4 +129,96 @@ class Product extends AbstractModel
         }, $variants);
     }
 
+    // ------------------------------------------------------------------------
+    //                      SUPPORT FOR PRODUCT IMAGES
+    // ------------------------------------------------------------------------
+
+    /**
+     * Retrieve all risks for an order
+     *
+     * @link https://help.shopify.com/api/reference/product_image#index
+     *
+     * @param array $params
+     * @return array
+     */
+    public function images(array $params = [])
+    {
+        $response = $this->api->images($this->getId(), $params);
+        return isset($response['images'])
+            ? $response['images']
+            : $response;
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#create
+     *
+     * @param array $params
+     * @return array
+     */
+    public function createImage(array $params = [])
+    {
+        $response = $this->api->createImage($this->getId(), $params);
+        return isset($response['image'])
+            ? $response['image']
+            : $response;
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#update
+     *
+     * @param $image_id
+     * @param array $params
+     * @return array
+     */
+    public function updateImage($image_id, array $params = [])
+    {
+        $response = $this->api->updateImage($this->getId(), $image_id, $params);
+        return isset($response['image'])
+            ? $response['image']
+            : $response;
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#show
+     *
+     * @param $image_id
+     * @param array $params
+     * @return array
+     */
+    public function showImage($image_id, array $params = [])
+    {
+        $response = $this->api->showImage($this->getId(), $image_id, $params);
+        return isset($response['image'])
+            ? $response['image']
+            : $response;
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#count
+     *
+     * @param array $params
+     * @return integer
+     */
+    public function countImages(array $params = [])
+    {
+        $response = $this->api->countImages($this->getId(), $params);
+        return isset($response['count'])
+            ? $response['count']
+            : $response;
+    }
+
+    /**
+     * @link https://help.shopify.com/api/reference/product_image#destroy
+     *
+     * @param $image_id
+     * @return array
+     */
+    public function deleteImage($image_id)
+    {
+        $response = $this->api->deleteImage($this->getId(), $image_id);
+        return isset($response['image'])
+            ? $response['image']
+            : $response;
+    }
+
 }

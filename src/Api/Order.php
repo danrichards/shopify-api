@@ -194,6 +194,8 @@ class Order extends AbstractApi
     }
 
     /**
+     * @link https://help.shopify.com/api/reference/order_risks#create
+     *
      * @param $id
      * @param array $params
      * @return array
@@ -206,6 +208,8 @@ class Order extends AbstractApi
     }
 
     /**
+     * @link https://help.shopify.com/api/reference/order_risks#update
+     *
      * @param $id
      * @param $risk_id
      * @param array $params
@@ -219,6 +223,8 @@ class Order extends AbstractApi
     }
 
     /**
+     * @link https://help.shopify.com/api/reference/order_risks#show
+     *
      * @param $id
      * @param $risk_id
      * @return array
@@ -230,6 +236,8 @@ class Order extends AbstractApi
     }
 
     /**
+     * @link https://help.shopify.com/api/reference/order_risks#destroy
+     *
      * @param $id
      * @param $risk_id
      * @return array

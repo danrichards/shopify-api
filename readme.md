@@ -10,7 +10,8 @@ An object-oriented approach towards using the Shopify API.
 * [Order](https://help.shopify.com/api/reference/order)
 * [OrderRisk](https://help.shopify.com/api/reference/order) - via Order
 * [Product](https://help.shopify.com/api/reference/product)
-* [Variant](https://help.shopify.com/api/reference/product_variant)
+* [ProductImage](https://help.shopify.com/api/reference/product_image)
+* [ProductVariant](https://help.shopify.com/api/reference/product_variant)
 * [Webhook](https://help.shopify.com/api/reference/webhook)
 
 ## Composer
