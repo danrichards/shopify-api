@@ -187,7 +187,7 @@ class Product extends AbstractApi
      */
     public function updateImage($id, $image_id, array $params = [])
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$image_id}.json";
+        $alt_path = "/admin/products/#id#/images/{$image_id}.json";
         $image = $params;
         return $this->post($this->getPath($id, $alt_path), compact('image'));
     }
@@ -222,7 +222,7 @@ class Product extends AbstractApi
      * @link https://help.shopify.com/api/reference/product_image#destroy
      *
      * @param $id
-     * @param $fulfillment_id
+     * @param $image_id
      * @return array
      */
     public function deleteImage($id, $image_id)
