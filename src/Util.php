@@ -86,11 +86,11 @@ class Util
 
     /**
      * @param Response $response
-     * @return \Guzzle\Http\EntityBodyInterface|mixed|string
+     * @return mixed
      */
     public static function getContent(Response $response)
     {
-        $body = $response->getBody(true);
+        $body    = $response->getBody(true);
 
         $content = json_decode($body, true);
 
