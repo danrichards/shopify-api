@@ -2,14 +2,14 @@
 
 namespace ShopifyApi\Models;
 
+use BadMethodCallException;
 use DateTime;
 use DateTimeZone;
 use JsonSerializable;
+use ShopifyApi\Api\AbstractApi;
+use ShopifyApi\Client;
 use ShopifyApi\ClientTrait;
 use ShopifyApi\Util;
-use ShopifyApi\Client;
-use BadMethodCallException;
-use ShopifyApi\Api\AbstractApi;
 
 /**
  * Class AbstractModel

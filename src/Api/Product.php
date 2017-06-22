@@ -121,7 +121,7 @@ class Product extends AbstractApi
     /**
      * Delete a Product
      *
-     * @link https://help.shopify.com/api/reference/product#update
+     * @link https://help.shopify.com/api/reference/product#destroy
      *
      * @param $id
      * @return array

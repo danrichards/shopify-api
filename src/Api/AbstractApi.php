@@ -2,11 +2,11 @@
 
 namespace ShopifyApi\Api;
 
-use ShopifyApi\Client;
 use BadMethodCallException;
 use InvalidArgumentException;
+use ShopifyApi\Client;
 use ShopifyApi\ClientTrait;
-use ShopifyApi\ResponseMediator;
+use ShopifyApi\Util;
 
 /**
  * Abstract class for Api classes
@@ -141,25 +141,8 @@ abstract class AbstractApi
         $response = $this->client->getHttpClient()
             ->get($path, $parameters, $request_headers);
 
-        return ResponseMediator::getContent($response);
+        return Util::getContent($response);
     }
-
-//    /**
-//     * Send a HEAD request with query parameters
-//     *
-//     * @param string $path           Request path.
-//     * @param array  $parameters     HEAD parameters.
-//     * @param array  $request_headers Request headers.
-//     * @return \Guzzle\Http\Message\Response
-//     */
-//    protected function head($path, array $parameters = array(), $request_headers = array())
-//    {
-//        $response = $this->client->getHttpClient()->request($path, null, 'HEAD', $request_headers, array(
-//            'query' => $parameters,
-//        ));
-//
-//        return $response;
-//    }
 
     /**
      * Send a POST request with JSON-encoded parameters.
@@ -194,7 +177,7 @@ abstract class AbstractApi
             $request_headers
         );
 
-        return ResponseMediator::getContent($response);
+        return Util::getContent($response);
     }
 
     /**
@@ -225,7 +208,7 @@ abstract class AbstractApi
             ->getHttpClient()
             ->put($path, $body, $request_headers);
 
-        return ResponseMediator::getContent($response);
+        return Util::getContent($response);
     }
 
     /**
@@ -258,7 +241,7 @@ abstract class AbstractApi
             $request_headers
         );
 
-        return ResponseMediator::getContent($response);
+        return Util::getContent($response);
     }
 
     /**
@@ -269,22 +252,7 @@ abstract class AbstractApi
      */
     protected function createParametersBody(array $parameters)
     {
-        foreach ($parameters as $name => $parameter) {
-//            if (is_bool($parameter)) {
-//                $parameters[$name] = $parameter ? 'true' : 'false';
-//            } elseif (is_array($parameter)) {
-//                foreach ($parameter as $sub_name => $sub_parameter) {
-//                    if (is_bool($sub_parameter)) {
-//                        $sub_parameter = $sub_parameter ? 'true' : 'false';
-//                    }
-//                    $parameters[$name.'/'.$sub_name] = $sub_parameter;
-//                }
-//                unset($parameters[$name]);
-//            } elseif ($parameter instanceof DateTime) {
-//                $parameters[$name] = $parameter->format('c');
-//            }
-        }
-
+        // Nothing is necessitated here right now.
         return $parameters;
     }
 
@@ -302,78 +270,6 @@ abstract class AbstractApi
 
         return static::$path;
     }
-
-//    /**
-//     * Validate parameters array
-//     *
-//     * @param string[] $required required properties (array keys)
-//     * @param array $params   array to check for existence of the required keys
-//     *
-//     * @throws MissingArgumentException if a required parameter is missing
-//     */
-//    protected function validateRequiredParameters(array $required, array $params)
-//    {
-//        foreach ($required as $param) {
-//            if (!isset($params[$param])) {
-//                throw new MissingArgumentException(sprintf('The "%s" parameter is required.', $param));
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Validate allowed parameters array
-//     * Checks whether the passed parameters are allowed
-//     *
-//     * @param string[]        $allowed allowed properties
-//     * @param array|string $params  array to check
-//     * @param string $paramName
-//     * @return array array of validated parameters
-//     *
-//     * @throws InvalidArgumentException if a parameter is not allowed
-//     */
-//    protected function validateAllowedParameters(array $allowed, $params, $paramName)
-//    {
-//        if (!is_array($params)) {
-//            $params = array($params);
-//        }
-//
-//        foreach ($params as $param) {
-//            if (!in_array($param, $allowed)) {
-//                throw new InvalidArgumentException(sprintf(
-//                    'The "%s" parameter may contain only values within "%s". "%s" given.',
-//                    $paramName,
-//                    implode(", ", $allowed),
-//                    $param
-//                ));
-//            }
-//        }
-//
-//        return $params;
-//    }
-//
-//    /**
-//     * Validate that the params array includes at least one of
-//     * the keys in a given array
-//     *
-//     * @param string[] $atLeastOneOf allowed properties
-//     * @param array $params       array to check
-//     * @return boolean
-//     *
-//     * @throws MissingArgumentException
-//     */
-//    protected function validateAtLeastOneOf(array $atLeastOneOf, array $params)
-//    {
-//        foreach ($atLeastOneOf as $param) {
-//            if (isset($params[$param])) {
-//                return true;
-//            }
-//        }
-//
-//        throw new MissingArgumentException(sprintf(
-//            'You need to provide at least one of the following parameters "%s".',
-//            implode('", "', $atLeastOneOf)
-//        ));
-//    }
 
     /**
      * Remove our fields that don't need to be passed to Trello.

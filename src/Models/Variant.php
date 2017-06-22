@@ -30,7 +30,6 @@ use ShopifyApi\Models\Traits\OwnsMetafields;
  * @method string getOldInventoryQuantity()
  * @method string getRequiresShipping()
  * @method $this setProductId(int $product_id)
- * @method $this setCompareAtPrice(float $price)
  * @method $this setPrice(float $price)
  * @method $this setSku(string $sku)
  * @method $this setPosition(int $position)
