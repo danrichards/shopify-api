@@ -6,6 +6,7 @@ use BadMethodCallException;
 use Guzzle\Http\Client as GuzzleClient;
 use InvalidArgumentException;
 use ShopifyApi\Api\AbstractApi;
+use ShopifyApi\Api\CustomCollection;
 use ShopifyApi\Api\Discount;
 use ShopifyApi\Api\Metafield;
 use ShopifyApi\Api\Order;
@@ -85,6 +86,25 @@ class Client
     }
 
     /**
+     * Proxies $this->members() to $this->api('members')
+     *
+     * @param string $name method name
+     * @param array  $args arguments
+     *
+     * @return AbstractApi
+     *
+     * @throws BadMethodCallException
+     */
+    public function __call($name, $args)
+    {
+        try {
+            return $this->api($name);
+        } catch (InvalidArgumentException $e) {
+            throw new BadMethodCallException(sprintf('Undefined method called: "%s"', $name));
+        }
+    }
+
+    /**
      * Get an API by name
      *
      * @param string $name
@@ -95,6 +115,10 @@ class Client
     public function api($name)
     {
         switch ($name) {
+            case 'custom_collection':
+            case 'custom_collections':
+                $api = new CustomCollection($this);
+                break;
             case 'discount':
             case 'discounts':
                 $api = new Discount($this);
@@ -224,24 +248,5 @@ class Client
         }
 
         $this->options[$name] = $value;
-    }
-    
-    /**
-     * Proxies $this->members() to $this->api('members')
-     *
-     * @param string $name method name
-     * @param array  $args arguments
-     *
-     * @return AbstractApi
-     *
-     * @throws BadMethodCallException
-     */
-    public function __call($name, $args)
-    {
-        try {
-            return $this->api($name);
-        } catch (InvalidArgumentException $e) {
-            throw new BadMethodCallException(sprintf('Undefined method called: "%s"', $name));
-        }
     }
 }

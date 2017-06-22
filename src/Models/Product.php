@@ -5,6 +5,7 @@ namespace ShopifyApi\Models;
 use DateTime;
 use DateTimeZone;
 use ShopifyApi\Models\Traits\OwnsMetafields;
+use ShopifyApi\Models\Traits\Publishes;
 use ShopifyApi\Models\Traits\Taggable;
 
 /**
@@ -48,55 +49,13 @@ use ShopifyApi\Models\Traits\Taggable;
 class Product extends AbstractModel
 {
 
-    use OwnsMetafields, Taggable;
+    use OwnsMetafields, Taggable, Publishes;
 
     /** @var string $api_name */
     protected static $api_name = 'product';
 
     /** @var array $load_params */
     protected static $load_params = [];
-
-    /**
-     * @param DateTimeZone $time_zone
-     * @return DateTime|null
-     */
-    public function getPublishedAt(DateTimeZone $time_zone = null)
-    {
-        return is_null($date = $this->getOriginal('published_at'))
-            ? $date : new DateTime($date, $time_zone);
-    }
-
-    /**
-     * @param DateTime|string
-     * @return $this
-     */
-    public function setPublishedAt($stringOrDateTime)
-    {
-        $this->data['published_at'] = $stringOrDateTime instanceof DateTime || $stringOrDateTime instanceof \Carbon\Carbon
-            ? $stringOrDateTime->format('c') : $stringOrDateTime;
-
-        return $this;
-    }
-
-    /**
-     * Sugar for publishing
-     *
-     * @return $this
-     */
-    public function publish()
-    {
-        return $this->setPublishedAt(new DateTime())->save();
-    }
-
-    /**
-     * Sugar for unpublishing
-     *
-     * @return $this
-     */
-    public function unpublish()
-    {
-        return $this->setPublishedAt(null)->save();
-    }
 
     /**
      * @param $variant_id
