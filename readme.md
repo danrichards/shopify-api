@@ -2,13 +2,15 @@
 
 An object-oriented approach towards using the Shopify API. 
 
-## Supported Currently:
+## Supported Objects / Endpoints:
 
+* [CustomCollection](https://help.shopify.com/api/reference/customcollection)
 * [Discount](https://help.shopify.com/api/reference/discount) - Shopify Plus
-* [Fulfillment](https://help.shopify.com/api/reference/order) - via Order
+* [Fulfillment](https://help.shopify.com/api/reference/fulfillment) - via Order
+* [FulfillmentEvent](https://help.shopify.com/api/reference/fulfillmentevent) - via Order
 * [Metafield](https://help.shopify.com/api/reference/metafield)
 * [Order](https://help.shopify.com/api/reference/order)
-* [OrderRisk](https://help.shopify.com/api/reference/order) - via Order
+* [OrderRisk](https://help.shopify.com/api/reference/order_risks) - via Order
 * [Product](https://help.shopify.com/api/reference/product)
 * [ProductImage](https://help.shopify.com/api/reference/product_image)
 * [ProductVariant](https://help.shopify.com/api/reference/product_variant)
@@ -23,11 +25,9 @@ An object-oriented approach towards using the Shopify API.
 ```
 // Assumes setup of client with access token.
 $mgr = ShopifyApi\Manager::init($shop, $token);
-
 $mgr->getProduct($product_id = 123);              // returns ShopifyApi/Models/Product
 
 // Alternatively, we may call methods on the API object.
-
 $mgr->api('products')->show($product_id = 123);   // returns array
 
 See Facade usages for other methods available.
@@ -56,53 +56,48 @@ SHOPIFY_TOKEN=your-token-here
 
 Methods called on `Manager` will cascade down onto `Client` via the `__call` method.
 
+> If you're using Laravel, `Models` will return `\Illuminate\Support\Collection` instead of `array`.
+
 ```
 Shopify::getProduct($product_id = 123);     // returns ShopifyApi/Models/Product
-
-Shopify::getAllProducts();                  // returns Collection of ShopifyApi/Models/Product
+Shopify::getAllProducts();                  // returns Collection|array of ShopifyApi/Models/Product
 
 Shopify::getVariant($variant_id = 456);     // returns ShopifyApi/Models/Variant
-
-Shopify::getAllVariants($product_id = 123); // returns Collection of ShopifyApi/Models/Variant
+Shopify::getAllVariants($product_id = 123); // returns Collection|array of ShopifyApi/Models/Variant
 
 Shopify::getOrder($order_id = 789);         // returns ShopifyApi/Models/Order
-
-Shopify::getAllOrders();                    // returns a Collection of ShopifyApi/Models/Order
+Shopify::getAllOrders();                    // returns a Collection|array of ShopifyApi/Models/Order
 
 Shopify::getMetafield($metafield_id = 123); // returns ShopifyApi/Models/Metafield
 
 Shopify::getDiscount($dicount_id = 123);    // returns ShopifyApi/Models/Discount
+Shopify::getAllDiscounts();                 // returns Collection|array of ShopifyApi/Models/Discount
 
-Shopify::getAllDiscounts();                 // returns Collection of ShopifyApi/Models/Discount
-
-Shopify::getAllWebhooks();                  // returns Collection of ShopifyApi/Models/Webhook
+Shopify::getAllWebhooks();                  // returns Collection|array of ShopifyApi/Models/Webhook
 
 // Alternatively, we may call methods on the API object.
 
 Shopify::api('products')->show($product_id = 123);           // returns array
-
 Shopify::api('products')->all();                             // returns array
-
 Shopify::api('products')->count();                           // returns int
 
 Shopify::api('variants')->show($variant_id = 456);           // returns array
-
 Shopify::api('variants')->product($product_id = 123)->all(); // returns array
 
 Shopify::api('orders')->show($order_id = 123);               // returns array
-
 Shopify::api('orders')->all();                               // returns array
-
 Shopify::api('orders')->count();                             // returns int
 
-Shopify::api('discounts')->show($discount_id = 123);         // returns array
+Shopify::api('custom_collections')->show($cc_id = 123);      // returns array
+Shopify::api('custom_collections')->all();                   // returns array
+Shopify::api('custom_collections')->count();                 // returns int
 
-Shopify::api('discounts')->all();                            // returns array
+Shopify::api('discounts')->show($discount_id = 123);         // returns array
+Shopify::api('discounts')->all();                            // returns array               
+Shopify::api('discounts')->count();                          // returns int
 
 Shopify::api('webhooks')->show($webhook_id = 123);           // returns array
-
 Shopify::api('webhooks')->all();                             // returns array
-
 Shopify::api('webhooks')->count();                           // returns int
 ```
 
@@ -128,6 +123,20 @@ $product->setTitle('Burton Freestyle 152');
 $product->save();
 ```
 
+##### Add a product to a collection
+
+```
+$collection = Shopify::getCustomCollection(123);
+$collection->add(456);
+```
+
+or
+
+```
+$collection = Shopify::getCustomCollection(123);
+$collection->add([456,789]);
+```
+
 ##### Creating and updating metafields for resources is more intuitive using key / namespace.
 
 ```
@@ -139,7 +148,7 @@ $product->updateMetafield('in_stock', 'inventory', ['value' => 122]);
 $product->updateOrCreateMetafield('in_stock', 'inventory', ['value' => 200]);
 
 // Support is included for arrays and objects (json encodable) and null
-$product->createMetafield('board_specs', 'criteria', ['value' => new MyJsonSerializbleObject()]);
+$product->createMetafield('board_specs', 'criteria', ['value' => new MyJsonSerializableObject()]);
 ```
 
 ## Embedded Apps
@@ -242,7 +251,8 @@ This repository's structure was modeled after the robust [`cdaguerre/php-trello-
 ## Todo
 
 * Migrate from `guzzle/guzzle` to `guzzlehttp/guzzle`, bump version.
-* Model support for deletion. A `remove()` method.
+* Publish files for Laravel setup
+* Artisan Command to create token
 
 ## License
 
