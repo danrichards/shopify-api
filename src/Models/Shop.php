@@ -151,6 +151,65 @@ use ShopifyApi\Client;
 class Shop extends AbstractModel
 {
 
+    const SCOPE_READ_ANALYTICS = 'read_analytics';
+    const SCOPE_READ_CHECKOUTS = 'read_checkouts';
+    const SCOPE_READ_CONTENT = 'read_content';
+    const SCOPE_READ_CUSTOMERS = 'read_customers';
+    const SCOPE_READ_DRAFT_ORDERS = 'read_draft_orders';
+    const SCOPE_READ_FULFILLMENTS = 'read_fulfillments';
+    const SCOPE_READ_ORDERS = 'read_orders';
+    const SCOPE_READ_PRICE_RULES = 'read_price_rules';
+    const SCOPE_READ_PRODUCTS = 'read_products';
+    const SCOPE_READ_REPORTS = 'read_reports';
+    const SCOPE_READ_SCRIPT_TAGS = 'read_script_tags';
+    const SCOPE_READ_SHIPPING = 'read_shipping';
+    const SCOPE_READ_THEMES = 'read_themes';
+    const SCOPE_READ_USERS = 'read_users';
+    const SCOPE_WRITE_CHECKOUTS = 'write_checkouts';
+    const SCOPE_WRITE_CONTENT = 'write_content';
+    const SCOPE_WRITE_CUSTOMERS = 'write_customers';
+    const SCOPE_WRITE_DRAFT_ORDERS = 'write_draft_orders';
+    const SCOPE_WRITE_FULFILLMENTS = 'write_fulfillments';
+    const SCOPE_WRITE_ORDERS = 'write_orders';
+    const SCOPE_WRITE_PRICE_RULES = 'write_price_rules';
+    const SCOPE_WRITE_PRODUCTS = 'write_products';
+    const SCOPE_WRITE_REPORTS = 'write_reports';
+    const SCOPE_WRITE_SCRIPT_TAGS = 'write_script_tags';
+    const SCOPE_WRITE_SHIPPING = 'write_shipping';
+    const SCOPE_WRITE_THEMES = 'write_themes';
+    const SCOPE_WRITE_USERS = 'write_users';
+
+    /** @var array $scopes */
+    public static $scopes = [
+        self::SCOPE_READ_ANALYTICS,
+        self::SCOPE_READ_CHECKOUTS,
+        self::SCOPE_READ_CONTENT,
+        self::SCOPE_READ_CUSTOMERS,
+        self::SCOPE_READ_DRAFT_ORDERS,
+        self::SCOPE_READ_FULFILLMENTS,
+        self::SCOPE_READ_ORDERS,
+        self::SCOPE_READ_PRICE_RULES,
+        self::SCOPE_READ_PRODUCTS,
+        self::SCOPE_READ_REPORTS,
+        self::SCOPE_READ_SCRIPT_TAGS,
+        self::SCOPE_READ_SHIPPING,
+        self::SCOPE_READ_THEMES,
+        self::SCOPE_READ_USERS,
+        self::SCOPE_WRITE_CHECKOUTS,
+        self::SCOPE_WRITE_CONTENT,
+        self::SCOPE_WRITE_CUSTOMERS,
+        self::SCOPE_WRITE_DRAFT_ORDERS,
+        self::SCOPE_WRITE_FULFILLMENTS,
+        self::SCOPE_WRITE_ORDERS,
+        self::SCOPE_WRITE_PRICE_RULES,
+        self::SCOPE_WRITE_PRODUCTS,
+        self::SCOPE_WRITE_REPORTS,
+        self::SCOPE_WRITE_SCRIPT_TAGS,
+        self::SCOPE_WRITE_SHIPPING,
+        self::SCOPE_WRITE_THEMES,
+        self::SCOPE_WRITE_USERS,
+    ];
+
     /** @var string $api_name */
     protected static $api_name = 'shop';
 
