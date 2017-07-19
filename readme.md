@@ -1,4 +1,6 @@
-# Shopify API
+# Shopify API (Deprecated, uses Guzzle 3.9)
+
+> Please note: the **new version** using Guzzle 6.2 is [actively maintained here](https://github.com/danrichards/shopify)
 
 An object-oriented approach towards using the Shopify API. 
 
