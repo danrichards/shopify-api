@@ -130,6 +130,11 @@ class HttpClient
 
         try {
             $response = $this->client->send($request);
+        } catch (ClientErrorResponseException $e) {
+            $responseBody = $e->getResponse()->getBody(true);
+            throw new RuntimeException(
+                sprintf('%s\n[body] %s', $e->getMessage(),$responseBody), $e->getCode(), $e
+            );
         } catch (\LogicException $e) {
             throw new ErrorException($e->getMessage(), $e->getCode(), $e);
         } catch (\RuntimeException $e) {
