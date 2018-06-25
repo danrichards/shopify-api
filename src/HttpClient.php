@@ -9,6 +9,7 @@ use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client as GuzzleClient;
+use Log;
 
 /**
  * Class HttpClient
@@ -129,7 +130,7 @@ class HttpClient
         $this->lastRequest  = $request;
 
         if (env('SHOPIFYAPI_LOG_EVERY_REQUEST')){
-            Log::info('SHOPIFY API Request', [
+            Log::info('SHOPIFY API Request [OLD]', [
                 'method' => $httpMethod,
                 'uri' => $path
             ] + $options);
