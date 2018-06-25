@@ -128,6 +128,13 @@ class HttpClient
 
         $this->lastRequest  = $request;
 
+        if (env('SHOPIFYAPI_LOG_EVERY_REQUEST')){
+            Log::info('SHOPIFY API Request', [
+                'method' => $httpMethod,
+                'uri' => $path
+            ] + $options);
+        }
+
         try {
             $response = $this->client->send($request);
         } catch (ClientErrorResponseException $e) {
