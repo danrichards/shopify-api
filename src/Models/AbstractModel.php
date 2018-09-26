@@ -301,7 +301,7 @@ abstract class AbstractModel implements JsonSerializable
      *
      * @return $this
      */
-    protected function update()
+    public function update()
     {
         $this->preUpdate();
         $this->data = $this->api->update($this->id, $this->data);
