@@ -88,7 +88,7 @@ class Metafield extends AbstractModel
      *
      * @return $this
      */
-    protected function create()
+    public function create()
     {
         $this->preCreate();
         if ($this->owner_resource) {

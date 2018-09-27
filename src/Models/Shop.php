@@ -258,7 +258,7 @@ class Shop extends AbstractModel
      * @return $this
      * @throws \BadMethodCallException
      */
-    protected function update()
+    public function update()
     {
         throw new BadMethodCallException("Method not allowed on Shop resource.");
     }
