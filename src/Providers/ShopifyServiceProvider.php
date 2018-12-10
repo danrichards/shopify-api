@@ -21,7 +21,7 @@ class ShopifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('shopify', function ($app) {
+        $this->app->singleton('shopify-api', function ($app) {
             return Manager::init(env('SHOPIFY_DOMAIN'), env('SHOPIFY_TOKEN'));
         });
     }
