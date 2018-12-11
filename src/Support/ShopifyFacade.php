@@ -17,6 +17,6 @@ class ShopifyFacade extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor() { return 'shopify'; }
+    protected static function getFacadeAccessor() { return 'shopify-api'; }
 
 }
