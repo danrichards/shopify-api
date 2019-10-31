@@ -83,6 +83,8 @@ Shopify::api('products')->show($product_id = 123);           // returns array
 Shopify::api('products')->all();                             // returns array
 Shopify::api('products')->count();                           // returns int
 
+Shopify::api('products')->metafields($product_id = '1234')   // returns array
+
 Shopify::api('variants')->show($variant_id = 456);           // returns array
 Shopify::api('variants')->product($product_id = 123)->all(); // returns array
 
