@@ -19,7 +19,7 @@ class CustomCollection extends AbstractApi
     protected static $parameters_wrap_many = 'custom_collections';
 
     /** @var string $path */
-    protected static $path = '/admin/custom_collections/#id#.json';
+    protected static $path = '/custom_collections/#id#.json';
 
     /** @var array $fields */
     public static $fields = [
@@ -49,7 +49,7 @@ class CustomCollection extends AbstractApi
      */
     public function all(array $params = [])
     {
-        return $this->get('/admin/custom_collections.json', $params);
+        return $this->get('/custom_collections.json', $params);
     }
 
     /**
@@ -62,7 +62,7 @@ class CustomCollection extends AbstractApi
      */
     public function count(array $params = [])
     {
-        $count = $this->get('/admin/custom_collections/count.json', $params);
+        $count = $this->get('/custom_collections/count.json', $params);
         return isset($count['count'])
             ? $count['count'] : 0;
     }
@@ -93,7 +93,7 @@ class CustomCollection extends AbstractApi
     {
         $custom_collection = $params;
 
-        return $this->post('/admin/custom_collections.json', compact('custom_collection'));
+        return $this->post('/custom_collections.json', compact('custom_collection'));
     }
 
     /**

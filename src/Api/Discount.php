@@ -20,7 +20,7 @@ class Discount extends AbstractApi
     protected static $parameters_wrap_many = 'discounts';
 
     /** @var string $path */
-    protected static $path = '/admin/discounts/#id#.json';
+    protected static $path = '/discounts/#id#.json';
 
     /** @var array $fields */
     public static $fields = [
@@ -63,7 +63,7 @@ class Discount extends AbstractApi
      */
     public function create(array $discount = array())
     {
-        return $this->post("/admin/discounts.json", compact('discount'));
+        return $this->post("/discounts.json", compact('discount'));
     }
 
     /**
@@ -78,7 +78,7 @@ class Discount extends AbstractApi
      */
     public function all(array $params = [])
     {
-        return $this->get('/admin/discounts.json', $params);
+        return $this->get('/discounts.json', $params);
     }
 
     /**
@@ -92,7 +92,7 @@ class Discount extends AbstractApi
      */
     public function show($id, array $params = [])
     {
-        return $this->get("/admin/discounts/{$id}.json", $params);
+        return $this->get("/discounts/{$id}.json", $params);
     }
 
     /**
@@ -105,7 +105,7 @@ class Discount extends AbstractApi
      */
     public function disable($id)
     {
-        return $this->post("/admin/discounts/{$id}/disable.json");
+        return $this->post("/discounts/{$id}/disable.json");
     }
 
     /**
@@ -118,7 +118,7 @@ class Discount extends AbstractApi
      */
     public function enable($id)
     {
-        return $this->post("/admin/discounts/{$id}/enable.json");
+        return $this->post("/discounts/{$id}/enable.json");
     }
 
     /**
@@ -131,7 +131,7 @@ class Discount extends AbstractApi
      */
     public function remove($id)
     {
-        return parent::delete("/admin/discounts/{$id}.json");
+        return parent::delete("/discounts/{$id}.json");
     }
 
     /**
@@ -146,7 +146,7 @@ class Discount extends AbstractApi
      */
     public function delete($id, array $parameters = [], $request_headers = [])
     {
-        return parent::delete("/admin/discounts/{$id}.json");
+        return parent::delete("/discounts/{$id}.json");
     }
 
     /**

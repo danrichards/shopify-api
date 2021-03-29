@@ -17,7 +17,7 @@ class Shop extends AbstractApi
     protected static $parameters_wrap_many = 'shops';
 
     /** @var string $path */
-    protected static $path = '/admin/shop.json';
+    protected static $path = '/shop.json';
 
     /** @var array $fields */
     public static $fields = [

@@ -88,7 +88,7 @@ class Order extends AbstractApi
     protected static $parameters_wrap_many = 'orders';
 
     /** @var string $path */
-    protected static $path = '/admin/orders/#id#.json';
+    protected static $path = '/orders/#id#.json';
 
     /** @var array $ignore_on_update_fields */
     public static $ignore_on_update_fields = [];
@@ -103,7 +103,7 @@ class Order extends AbstractApi
      */
     public function all(array $params = [])
     {
-        return $this->get('/admin/orders.json', $params);
+        return $this->get('/orders.json', $params);
     }
 
     /**
@@ -116,7 +116,7 @@ class Order extends AbstractApi
      */
     public function count(array $params = [])
     {
-        $count =  $this->get('/admin/orders/count.json', $params);
+        $count =  $this->get('/orders/count.json', $params);
         return isset($count['count'])
             ? $count['count'] : 0;
     }
@@ -147,7 +147,7 @@ class Order extends AbstractApi
     {
         $order = $params;
 
-        return $this->post('/admin/orders.json', compact('order'));
+        return $this->post('/orders.json', compact('order'));
     }
 
     /**
@@ -189,7 +189,7 @@ class Order extends AbstractApi
      */
     public function risks($id, array $params = [])
     {
-        $alt_path = '/admin/orders/#id#/risks.json';
+        $alt_path = '/orders/#id#/risks.json';
         return $this->get($this->getPath($id, $alt_path), $params);
     }
 
@@ -202,7 +202,7 @@ class Order extends AbstractApi
      */
     public function createRisk($id, array $params = [])
     {
-        $alt_path = '/admin/orders/#id#/risks.json';
+        $alt_path = '/orders/#id#/risks.json';
         $risk = $params;
         return $this->post($this->getPath($id, $alt_path), compact('risk'));
     }
@@ -217,7 +217,7 @@ class Order extends AbstractApi
      */
     public function updateRisk($id, $risk_id, array $params = [])
     {
-        $alt_path = "/admin/orders/#id#/risks/{$risk_id}.json";
+        $alt_path = "/orders/#id#/risks/{$risk_id}.json";
         $risk = $params;
         return $this->post($this->getPath($id, $alt_path), compact('risk'));
     }
@@ -231,7 +231,7 @@ class Order extends AbstractApi
      */
     public function showRisk($id, $risk_id)
     {
-        $alt_path = "/admin/orders/#id#/risks/{$risk_id}.json";
+        $alt_path = "/orders/#id#/risks/{$risk_id}.json";
         return $this->get($this->getPath($id, $alt_path));
     }
 
@@ -244,7 +244,7 @@ class Order extends AbstractApi
      */
     public function deleteRisk($id, $risk_id)
     {
-        $alt_path = "/admin/orders/#id#/risks/{$risk_id}.json";
+        $alt_path = "/orders/#id#/risks/{$risk_id}.json";
         return $this->delete($this->getPath($id, $alt_path));
     }
 
@@ -263,7 +263,7 @@ class Order extends AbstractApi
      */
     public function fulfillments($id, array $params = [])
     {
-        $alt_path = '/admin/orders/#id#/fulfillments.json';
+        $alt_path = '/orders/#id#/fulfillments.json';
         return $this->get($this->getPath($id, $alt_path), $params);
     }
 
@@ -276,7 +276,7 @@ class Order extends AbstractApi
      */
     public function createFulfillment($id, array $params = [])
     {
-        $alt_path = '/admin/orders/#id#/fulfillments.json';
+        $alt_path = '/orders/#id#/fulfillments.json';
         $fulfillment = $params;
         return $this->post($this->getPath($id, $alt_path), compact('fulfillment'));
     }
@@ -291,7 +291,7 @@ class Order extends AbstractApi
      */
     public function updateFulfillment($id, $fulfillment_id, array $params = [])
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}.json";
+        $alt_path = "/orders/#id#/fulfillments/{$fulfillment_id}.json";
         $fulfillment = $params;
         return $this->post($this->getPath($id, $alt_path), compact('fulfillment'));
     }
@@ -305,7 +305,7 @@ class Order extends AbstractApi
      */
     public function showFulfillment($id, $fulfillment_id)
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}.json";
+        $alt_path = "/orders/#id#/fulfillments/{$fulfillment_id}.json";
         return $this->get($this->getPath($id, $alt_path));
     }
 
@@ -318,7 +318,7 @@ class Order extends AbstractApi
      */
     public function countFulfillments($id, array $params = [])
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/count.json";
+        $alt_path = "/orders/#id#/fulfillments/count.json";
         return $this->get($this->getPath($id, $alt_path), $params);
     }
 
@@ -331,7 +331,7 @@ class Order extends AbstractApi
      */
     public function openFulfillment($id, $fulfillment_id)
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/open.json";
+        $alt_path = "/orders/#id#/fulfillments/{$fulfillment_id}/open.json";
         return $this->post($this->getPath($id, $alt_path));
     }
 
@@ -344,7 +344,7 @@ class Order extends AbstractApi
      */
     public function completeFulfillment($id, $fulfillment_id)
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/complete.json";
+        $alt_path = "/orders/#id#/fulfillments/{$fulfillment_id}/complete.json";
         return $this->post($this->getPath($id, $alt_path));
     }
 
@@ -357,7 +357,7 @@ class Order extends AbstractApi
      */
     public function cancelFulfillment($id, $fulfillment_id)
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/cancel.json";
+        $alt_path = "/orders/#id#/fulfillments/{$fulfillment_id}/cancel.json";
         return $this->post($this->getPath($id, $alt_path));
     }
 
@@ -377,7 +377,7 @@ class Order extends AbstractApi
      */
     public function fulfillmentEvents($id, $fulfillment_id, array $params = [])
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/events.json";
+        $alt_path = "/orders/#id#/fulfillments/{$fulfillment_id}/events.json";
         return $this->get($this->getPath($id, $alt_path), $params);
     }
 
@@ -391,7 +391,7 @@ class Order extends AbstractApi
      */
     public function createFulfillmentEvent($id, $fulfillment_id, array $params = [])
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/events.json";
+        $alt_path = "/orders/#id#/fulfillments/{$fulfillment_id}/events.json";
         $event = $params;
         return $this->post($this->getPath($id, $alt_path), compact('event'));
     }
@@ -406,7 +406,7 @@ class Order extends AbstractApi
      */
     public function showFulfillmentEvent($id, $fulfillment_id, $event_id)
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/events/{$event_id}.json";
+        $alt_path = "/orders/#id#/fulfillments/{$fulfillment_id}/events/{$event_id}.json";
         return $this->get($this->getPath($id, $alt_path));
     }
 
@@ -420,7 +420,7 @@ class Order extends AbstractApi
      */
     public function deleteFulfillmentEvent($id, $fulfillment_id, $event_id)
     {
-        $alt_path = "/admin/orders/#id#/fulfillments/{$fulfillment_id}/events/{$event_id}.json";
+        $alt_path = "/orders/#id#/fulfillments/{$fulfillment_id}/events/{$event_id}.json";
         return $this->delete($this->getPath($id, $alt_path));
     }
 

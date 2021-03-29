@@ -81,7 +81,13 @@ class Manager
         $base_url = preg_replace("/(https:\/\/|http:\/\/)/", "", $shop);
         $base_url = rtrim($base_url, "/");
         $base_url = str_replace('.myshopify.com', '', $base_url);
-        $base_url = "https://{$base_url}.myshopify.com";
+
+        if (Util::isLaravel() && function_exists('config') && config('shopify_api.api_version')) {
+            $api_version = config('shopify_api.api_version');
+        } else {
+            $api_version = '2020-07';
+        }
+        $base_url = "https://{$base_url}.myshopify.com/admin/api/{$api_version}";
 
         // By default, let's setup our main shopify shop.
         $config = [

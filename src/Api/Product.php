@@ -22,7 +22,7 @@ class Product extends AbstractApi
     protected static $parameters_wrap_many = 'products';
 
     /** @var string $path */
-    protected static $path = '/admin/products/#id#.json';
+    protected static $path = '/products/#id#.json';
 
     /** @var array $fields */
     public static $fields = [
@@ -57,7 +57,7 @@ class Product extends AbstractApi
      */
     public function all(array $params = [])
     {
-        return $this->get('/admin/products.json', $params);
+        return $this->get('/products.json', $params);
     }
 
     /**
@@ -70,7 +70,7 @@ class Product extends AbstractApi
      */
     public function count(array $params = [])
     {
-        $count = $this->get('/admin/products/count.json', $params);
+        $count = $this->get('/products/count.json', $params);
         return isset($count['count'])
             ? $count['count'] : 0;
     }
@@ -101,7 +101,7 @@ class Product extends AbstractApi
     {
         $product = $params;
 
-        return $this->post('/admin/products.json', compact('product'));
+        return $this->post('/products.json', compact('product'));
     }
 
     /**
@@ -159,7 +159,7 @@ class Product extends AbstractApi
      */
     public function images($id, array $params = [])
     {
-        $alt_path = '/admin/products/#id#/images.json';
+        $alt_path = '/products/#id#/images.json';
         return $this->get($this->getPath($id, $alt_path), $params);
     }
 
@@ -172,7 +172,7 @@ class Product extends AbstractApi
      */
     public function createImage($id, array $params = [])
     {
-        $alt_path = '/admin/products/#id#/images.json';
+        $alt_path = '/products/#id#/images.json';
         $image = $params;
         return $this->post($this->getPath($id, $alt_path), compact('image'));
     }
@@ -187,7 +187,7 @@ class Product extends AbstractApi
      */
     public function updateImage($id, $image_id, array $params = [])
     {
-        $alt_path = "/admin/products/#id#/images/{$image_id}.json";
+        $alt_path = "/products/#id#/images/{$image_id}.json";
         $image = $params;
         return $this->post($this->getPath($id, $alt_path), compact('image'));
     }
@@ -201,7 +201,7 @@ class Product extends AbstractApi
      */
     public function showImage($id, $image_id)
     {
-        $alt_path = "/admin/products/#id#/images/{$image_id}.json";
+        $alt_path = "/products/#id#/images/{$image_id}.json";
         return $this->get($this->getPath($id, $alt_path));
     }
 
@@ -214,7 +214,7 @@ class Product extends AbstractApi
      */
     public function countImages($id, array $params = [])
     {
-        $alt_path = "/admin/products/#id#/images/count.json";
+        $alt_path = "/products/#id#/images/count.json";
         return $this->get($this->getPath($id, $alt_path), $params);
     }
 
@@ -227,7 +227,7 @@ class Product extends AbstractApi
      */
     public function deleteImage($id, $image_id)
     {
-        $alt_path = "/admin/products/#id#/images/{$image_id}.json";
+        $alt_path = "/products/#id#/images/{$image_id}.json";
         return $this->delete($this->getPath($id, $alt_path));
     }
 

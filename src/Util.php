@@ -101,4 +101,20 @@ class Util
         return $content;
     }
 
+    /**
+     * @return bool
+     */
+    public static function isLaravel()
+    {
+        return defined('LARAVEL_START') && ! static::isLumen();
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isLumen()
+    {
+        return function_exists('app')
+            && preg_match('/lumen/i', app()->version());
+    }
 }
