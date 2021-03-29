@@ -23,7 +23,7 @@ class Variants extends AbstractApi
     protected static $parameters_wrap_many = 'variants';
 
     /** @var string $path */
-    protected static $path = '/admin/variants/#id#.json';
+    protected static $path = '/variants/#id#.json';
 
     /** @var array $fields */
     public static $fields = [
@@ -117,7 +117,7 @@ class Variants extends AbstractApi
             throw new BadMethodCallException('Please specify a product id.');
         }
 
-        $count = $this->get(sprintf('/admin/products/%d/variants/count.json', $this->product_id), $params);
+        $count = $this->get(sprintf('/products/%d/variants/count.json', $this->product_id), $params);
 
         return isset($count['count']) ? $count['count'] : 0;
     }
@@ -163,9 +163,8 @@ class Variants extends AbstractApi
      */
     public function remove($product_id, $id, array $params = [])
     {
-        $path = $this->getPath(rawurlencode($id));
-        $path = str_replace('admin/', "admin/products/{$product_id}", $path);
-        return $this->delete($this->getPath(rawurlencode($id)), $params);
+        $path = sprintf('/products/%d/variants/%d.json', $product_id, $id);
+        return $this->delete($path, $params);
     }
 
     /**
@@ -204,7 +203,7 @@ class Variants extends AbstractApi
      */
     private function getRelatedPath($product_id)
     {
-        return sprintf('/admin/products/%d/variants.json', $product_id);
+        return sprintf('/products/%d/variants.json', $product_id);
     }
 
 }

@@ -20,7 +20,7 @@ class Metafield extends AbstractApi
     protected static $parameters_wrap_many = 'metafields';
 
     /** @var string $path */
-    protected static $path = '/admin/metafields/#id#.json';
+    protected static $path = '/metafields/#id#.json';
 
     /** @var array $fields */
     public static $fields = [
@@ -65,10 +65,10 @@ class Metafield extends AbstractApi
      */
     public function all(array $params = [])
     {
-        $url = '/admin/metafields.json';
+        $url = '/metafields.json';
 
         if ($this->fluent_resource) {
-            $url = "/admin/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields.json";
+            $url = "/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields.json";
             $this->fluent_resource = $this->fluent_resource_id = null;
         }
 
@@ -85,10 +85,10 @@ class Metafield extends AbstractApi
      */
     public function count(array $params = [])
     {
-        $url = '/admin/metafields.json';
+        $url = '/metafields.json';
 
         if ($this->fluent_resource) {
-            $url = "/admin/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields/count.json";
+            $url = "/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields/count.json";
             $this->fluent_resource = $this->fluent_resource_id = null;
         }
 
@@ -109,10 +109,10 @@ class Metafield extends AbstractApi
      */
     public function show($id, array $params = [])
     {
-        $url = "/admin/metafields/{$id}.json";
+        $url = "/metafields/{$id}.json";
 
         if ($this->fluent_resource) {
-            $url = "/admin/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields/{$id}.json";
+            $url = "/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields/{$id}.json";
             $this->fluent_resource = $this->fluent_resource_id = null;
         }
 
@@ -130,10 +130,10 @@ class Metafield extends AbstractApi
      */
     public function update($id, array $params = [])
     {
-        $url = "/admin/metafields/{$id}.json";
+        $url = "/metafields/{$id}.json";
 
         if ($this->fluent_resource) {
-            $url = "/admin/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields/{$id}.json";
+            $url = "/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields/{$id}.json";
             $this->fluent_resource = $this->fluent_resource_id = null;
         }
 
@@ -152,10 +152,10 @@ class Metafield extends AbstractApi
      */
     public function delete($id, array $params = [], $request_headers = [])
     {
-        $url = "/admin/metafields/{$id}.json";
+        $url = "/metafields/{$id}.json";
 
         if ($this->fluent_resource) {
-            $url = "/admin/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields/{$id}.json";
+            $url = "/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields/{$id}.json";
             $this->fluent_resource = $this->fluent_resource_id = null;
         }
 
@@ -173,10 +173,10 @@ class Metafield extends AbstractApi
      */
     public function create(array $params = array())
     {
-        $url = "/admin/metafields.json";
+        $url = "/metafields.json";
 
         if ($this->fluent_resource) {
-            $url = "/admin/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields.json";
+            $url = "/{$this->fluent_resource}/{$this->fluent_resource_id}/metafields.json";
             $this->fluent_resource = $this->fluent_resource_id = null;
         }
 

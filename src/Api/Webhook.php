@@ -21,7 +21,7 @@ class Webhook extends AbstractApi
     protected static $parameters_wrap_many = 'webhooks';
 
     /** @var string $path */
-    protected static $path = '/admin/webhooks/#id#.json';
+    protected static $path = '/webhooks/#id#.json';
 
     /** @var array $fields */
     public static $fields = [
@@ -132,7 +132,7 @@ class Webhook extends AbstractApi
      */
     public function all(array $params = [])
     {
-        return $this->get('/admin/webhooks.json', $params);
+        return $this->get('/webhooks.json', $params);
     }
 
     /**
@@ -147,7 +147,7 @@ class Webhook extends AbstractApi
      */
     public function count(array $params = [])
     {
-        $count = $this->get('/admin/webhooks/count.json', $params);
+        $count = $this->get('/webhooks/count.json', $params);
         return isset($count['count']) ? $count['count'] : 0;
     }
 
@@ -161,7 +161,7 @@ class Webhook extends AbstractApi
      */
     public function create(array $webhook = array())
     {
-        return $this->post("/admin/webhooks.json", compact('webhook'));
+        return $this->post("/webhooks.json", compact('webhook'));
     }
 
     /**
@@ -175,7 +175,7 @@ class Webhook extends AbstractApi
      */
     public function show($id, array $params = [])
     {
-        return $this->get("/admin/webhooks/{$id}.json", $params);
+        return $this->get("/webhooks/{$id}.json", $params);
     }
 
 
@@ -190,7 +190,7 @@ class Webhook extends AbstractApi
      */
     public function update($id, array $params = [])
     {
-        return $this->put("/admin/webhooks/{$id}.json", $params);
+        return $this->put("/webhooks/{$id}.json", $params);
     }
 
     /**
@@ -203,7 +203,7 @@ class Webhook extends AbstractApi
      */
     public function remove($id)
     {
-        return parent::delete("/admin/webhooks/{$id}.json");
+        return parent::delete("/webhooks/{$id}.json");
     }
 
     /**
@@ -218,7 +218,7 @@ class Webhook extends AbstractApi
      */
     public function delete($id, array $parameters = [], $request_headers = [])
     {
-        return parent::delete("/admin/webhooks/{$id}.json");
+        return parent::delete("/webhooks/{$id}.json");
     }
 
 }

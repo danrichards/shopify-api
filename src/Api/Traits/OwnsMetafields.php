@@ -19,7 +19,7 @@ trait OwnsMetafields
     {
         $id = rawurlencode($id);
         $api_wrap = static::$parameters_wrap_many;
-        $arr = $this->get("/admin/{$api_wrap}/{$id}/metafields.json", $params);
+        $arr = $this->get("/{$api_wrap}/{$id}/metafields.json", $params);
         return is_array($arr) && isset($arr['metafields'])
             ? $arr['metafields'] : [];
     }
