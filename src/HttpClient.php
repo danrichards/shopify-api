@@ -143,10 +143,14 @@ class HttpClient
 
         $this->lastResponse = $response;
 
-        if ($response->hasHeader('X-Shopify-API-Deprecated-Reason')) {
-            $api_deprecated_reason = $response->getHeader('X-Shopify-API-Deprecated-Reason');
+        $api_deprecated_reason = $response->getHeader('X-Shopify-API-Deprecated-Reason');
+        $api_version_warning = $response->getHeader('X-Shopify-Api-Version-Warning');
+        if ($api_deprecated_reason || $api_version_warning) {
+            $api_version = $response->getHeader('X-Shopify-Api-Version');
             if (function_exists('logger')) {
-                logger('vendor:dan:shopify-api:deprecated', compact('api_deprecated_reason', 'httpMethod', 'path', 'body', 'options'));
+                logger('vendor:dan:shopify-api:deprecated',
+                    compact('api_version', 'api_version_warning', 'api_deprecated_reason') +
+                    ['request' => compact('httpMethod', 'path', 'body', 'options')]);
             }
         }
 
