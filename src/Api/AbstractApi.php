@@ -139,7 +139,7 @@ abstract class AbstractApi
     protected function get($path, array $parameters = array(), $request_headers = array())
     {
         $response = $this->client->getHttpClient()
-            ->get(ltrim($path,'/'), $parameters, $request_headers);
+            ->get($path, $parameters, $request_headers);
 
         return Util::getContent($response);
     }
@@ -155,7 +155,7 @@ abstract class AbstractApi
     protected function post($path, array $parameters = array(), $request_headers = array())
     {
         return $this->postRaw(
-            ltrim($path,'/'),
+            $path,
             $this->createParametersBody($parameters),
             $request_headers
         );
@@ -172,7 +172,7 @@ abstract class AbstractApi
     protected function postRaw($path, $body, $request_headers = array())
     {
         $response = $this->client->getHttpClient()->post(
-            ltrim($path,'/'),
+            $path,
             $body,
             $request_headers
         );
@@ -206,7 +206,7 @@ abstract class AbstractApi
 
         $response = $this->client
             ->getHttpClient()
-            ->put(ltrim($path,'/'), $body, $request_headers);
+            ->put($path, $body, $request_headers);
 
         return Util::getContent($response);
     }
@@ -222,7 +222,7 @@ abstract class AbstractApi
      */
     protected function put($path, array $parameters = [], $request_headers = [], $normalize = true)
     {
-        return $this->patch(ltrim($path,'/'), $parameters, $request_headers, $normalize);
+        return $this->patch($path, $parameters, $request_headers, $normalize);
     }
 
     /**
@@ -236,7 +236,7 @@ abstract class AbstractApi
     protected function delete($path, array $parameters = [], $request_headers = [])
     {
         $response = $this->client->getHttpClient()->delete(
-            ltrim($path,'/'),
+            $path,
             $this->createParametersBody($parameters),
             $request_headers
         );
@@ -265,10 +265,10 @@ abstract class AbstractApi
         $path = $path ?: static::$path;
 
         if ($id) {
-            return ltrim(preg_replace('/\#id\#/', rawurlencode($id), $path),'/');
+            return preg_replace('/\#id\#/', rawurlencode($id), $path);
         }
 
-        return ltrim(static::$path, '/');
+        return static::$path;
     }
 
     /**

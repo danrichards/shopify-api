@@ -124,7 +124,7 @@ class HttpClient
      */
     public function request($path, $body = null, $httpMethod = 'GET', array $headers = array(), array $options = array())
     {
-        $request = $this->createRequest($httpMethod, $path, $body, $headers, $options);
+        $request = $this->createRequest($httpMethod, ltrim($path, '/'), $body, $headers, $options);
 
         $this->lastRequest  = $request;
 
