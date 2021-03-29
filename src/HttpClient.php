@@ -3,12 +3,12 @@
 namespace ShopifyApi;
 
 use ErrorException;
-use InvalidArgumentException;
-use RuntimeException;
+use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\Response;
-use Guzzle\Http\Client as GuzzleClient;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Class HttpClient
@@ -142,6 +142,15 @@ class HttpClient
         }
 
         $this->lastResponse = $response;
+
+        $api_deprecated_reason = $response->getHeader('X-Shopify-API-Deprecated-Reason');
+        $api_version_warning = $response->getHeader('X-Shopify-Api-Version-Warning');
+        if (($api_deprecated_reason || $api_version_warning) && function_exists('logger')) {
+            $api_version = $response->getHeader('X-Shopify-Api-Version');
+            logger('vendor:dan:shopify-api:deprecated',
+                compact('api_version', 'api_version_warning', 'api_deprecated_reason') +
+                ['request' => compact('httpMethod', 'path', 'body', 'options')]);
+        }
 
         return $response;
     }
